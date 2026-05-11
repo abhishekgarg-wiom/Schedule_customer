@@ -1171,12 +1171,10 @@
     const slotInResponse = state.selectedSlot.replace('तक', 'के बीच');
     const isReschedule = (state.case === 'case1' || state.case === 'case2' || state.case === 'case3');
 
+    // Coming back from the picker screen: reply is the standard acknowledgement.
+    // The chosen date/time appears in Wiom's confirmation message below.
     setTimeout(() => {
-      chatBody.appendChild(userReplyWithQuote(
-        'नीचे दिए गए बटन से दिन और समय चुनें।',
-        `✔️ ${state.selectedDate}, ${state.selectedSlot.replace('तक','').trim()}`,
-        '10:43 AM'
-      ));
+      chatBody.appendChild(userBubble('✔️ हो गया', '10:43 AM'));
       scrollChatToBottom();
     }, 400);
 
