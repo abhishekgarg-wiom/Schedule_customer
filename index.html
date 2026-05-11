@@ -138,27 +138,6 @@
   .msg-time { font-size: 10px; line-height: 1.2; color: var(--wiom-text-hint); align-self: flex-end; display: flex; align-items: center; gap: 4px; }
   .msg-time .material-icons { font-size: 12px; color: var(--wiom-text-hint); }
 
-  /* ===== Scannable slot pill (used inside bot bubble for 2-slot proposals) =====
-     Each proposed date/time gets its own pill inside the bubble so the user can
-     scan options quickly without parsing a long sentence. */
-  .msg-slot-pill {
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 8px;
-    padding: 8px 12px;
-    display: flex; flex-direction: column;
-    gap: 2px;
-    width: 100%;
-    max-width: 228px;
-    margin: 2px 0;
-  }
-  .msg-slot-pill-date { font-weight: 700; font-size: 14px; line-height: 20px; color: var(--wiom-text-default); }
-  .msg-slot-pill-time { font-size: 13px; line-height: 18px; color: var(--wiom-text-sec); font-weight: 500; }
-  .msg-slot-pill-day { font-weight: 400; color: var(--wiom-text-sec); }
-  /* "unavailable" tone for edge-case proposals that have lapsed */
-  .msg-slot-pill.unavailable { background: rgba(255, 255, 255, 0.35); }
-  .msg-slot-pill.unavailable .msg-slot-pill-date,
-  .msg-slot-pill.unavailable .msg-slot-pill-time { color: var(--wiom-text-disabled); text-decoration: line-through; }
-
   /* Inline CTA — sibling of bubble */
   .msg-divider { height: 1px; background: var(--chat-divider); width: 100%; }
   .msg-cta { background: var(--chat-bubble-bot); border: none; width: 100%; padding: var(--s-12) var(--s-8); display: flex; align-items: center; justify-content: center; border-radius: 0 0 var(--r-medium) var(--r-medium); cursor: pointer; }
@@ -268,10 +247,9 @@
   .btn-primary:hover { background: var(--wiom-bg-brand-hover); }
   .btn-primary:active { transform: scale(0.99); }
 
-  /* Yellow screens (context + scenario) */
+  /* Yellow screens */
   .yellow-screen { background: #FFD888; position: absolute; inset: 0; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: none; }
   .yellow-screen::-webkit-scrollbar { display: none; }
-
   .context-content { padding: 32px 24px 0; display: flex; flex-direction: column; gap: 20px; flex: 1; }
   .context-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
   .context-user-info { display: flex; flex-direction: column; gap: 4px; flex: 1; }
@@ -295,7 +273,6 @@
   .scenario-card-num { font-size: 11px; font-weight: 700; color: #D92B90; text-transform: uppercase; letter-spacing: 0.04em; }
   .scenario-card-title { font-size: 15px; font-weight: 700; color: #161021; line-height: 22px; }
   .scenario-card-desc { font-size: 13px; font-weight: 400; color: #565656; line-height: 18px; margin-top: 2px; }
-  .scenario-card.edge .scenario-card-num { color: #B45200; }
 
   /* Hotspot hint */
   .hint-pulse { position: relative; }
@@ -322,7 +299,6 @@
     <section class="screen active" id="contextScreen">
       <div class="yellow-screen">
         <div class="context-content">
-
           <div class="context-header">
             <div class="context-user-info">
               <div class="context-q">यूजर कौन है?</div>
@@ -344,9 +320,8 @@
 
           <div class="context-block">
             <div class="context-q">अगले स्क्रीन पर क्या है?</div>
-            <div class="context-a">पाँच केस — एक नया सेटअप, तीन रिशेड्यूल केस, और एक एज केस। हर केस में चैट + पिकर + कन्फर्मेशन का पूरा फ्लो है।</div>
+            <div class="context-a">चार केस — एक नया सेटअप और तीन रिशेड्यूल केस। हर केस में पूरी चैट + पिकर + कन्फर्मेशन का फ्लो है।</div>
           </div>
-
         </div>
 
         <div class="context-cta-wrap">
@@ -359,9 +334,8 @@
     <section class="screen" id="scenarioScreen">
       <div class="yellow-screen">
         <div class="scenario-content">
-
           <div class="scenario-title">Pick a scenario</div>
-          <div class="scenario-subtitle">All five cases below, each with full chat → picker → confirmation</div>
+          <div class="scenario-subtitle">Four cases · each with full chat → picker → confirmation</div>
 
           <div class="scenario-group-label">नया सेटअप — व्योम 2 विकल्प भेजता है</div>
 
@@ -376,7 +350,7 @@
           <div class="scenario-card" id="scenarioCase1Card">
             <div class="scenario-card-num">Case 1</div>
             <div class="scenario-card-title">दिन कन्फर्म है</div>
-            <div class="scenario-card-desc">सेटअप का दिन तय हो चुका है। अब वर्मा जी उसे बदलना चाहते हैं।</div>
+            <div class="scenario-card-desc">वर्मा जी ने 2 विकल्पों में से एक चुन लिया था। अब उसे बदलना है।</div>
           </div>
 
           <div class="scenario-card" id="scenarioCase2Card">
@@ -390,15 +364,6 @@
             <div class="scenario-card-title">इंजीनियर तय हो चुका है</div>
             <div class="scenario-card-desc">दिन और इंजीनियर दोनों तय हैं। अब वर्मा जी दिन बदलना चाहते हैं।</div>
           </div>
-
-          <div class="scenario-group-label">एज केस</div>
-
-          <div class="scenario-card edge" id="scenarioEdgeCard">
-            <div class="scenario-card-num">Edge case</div>
-            <div class="scenario-card-title">दोनों विकल्प बुक हो गए</div>
-            <div class="scenario-card-desc">व्योम ने 2 स्लॉट सुझाए, पर वर्मा जी के चुनने से पहले दोनों भर गए। अब सिर्फ़ कैलेंडर खुलेगा।</div>
-          </div>
-
         </div>
 
         <div class="context-cta-wrap"></div>
@@ -407,7 +372,6 @@
 
     <!-- ============ CHAT SCREEN ============ -->
     <section class="screen" id="chatScreen">
-
       <div class="status-bar">
         <span>04:35 PM</span>
         <div class="status-bar-icons">
@@ -501,7 +465,6 @@
 
     <!-- ============ PICKER SCREEN ============ -->
     <section class="screen" id="pickerScreen">
-
       <div class="status-bar">
         <span>04:36 PM</span>
         <div class="status-bar-icons">
@@ -578,22 +541,24 @@
   // STATE
   // ============================================================================
   const state = {
-    case: null,                  // 'schedule' | 'case1' | 'case2' | 'case3' | 'edge'
-    committed: false,            // true once user has finalized a slot (via CTA or picker)
-    intentSent: false,           // true once user has typed and sent reschedule intent
+    case: null,                  // 'schedule' | 'case1' | 'case2' | 'case3'
+    committed: false,
+    intentSent: false,
     selectedDate: null,
     selectedDay: null,
     selectedSlot: null,
     keyboardOpen: false,
     typed: false,
-    activeCta: null,             // tracks the CTA that triggered the picker (for muting logic)
+    activeCta: null,
   };
 
-  // The two slots WIOM (CSP) proposes — central to Schedule + Case 2 + Edge cases.
+  // The two slots WIOM (CSP) proposes.
   const PROPOSED_SLOTS = [
-    { id: 'A', date: '12 मई',  day: 'मंगलवार', periodLabel: 'दोपहर',         time: 'दोपहर 2 से 5 बजे',       ctaShort: '12 मई, दोपहर ठीक है' },
-    { id: 'B', date: '13 मई',  day: 'बुधवार',  periodLabel: 'सुबह',          time: 'सुबह 11 से 2 बजे',       ctaShort: '13 मई, सुबह ठीक है'   },
+    { id: 'A', date: '12 मई',  day: 'मंगलवार', time: 'दोपहर 2 से 5 बजे',     ctaShort: '12 मई, दोपहर ठीक है' },
+    { id: 'B', date: '13 मई',  day: 'बुधवार',  time: 'सुबह 11 से 2 बजे',     ctaShort: '13 मई, सुबह ठीक है'   },
   ];
+  // In Case 1 and Case 3, the customer earlier picked slot A. Used to render past chat.
+  const PAST_PICKED_SLOT = PROPOSED_SLOTS[0];
 
   // ============================================================================
   // DOM REFS
@@ -746,40 +711,27 @@
     return card;
   }
 
-  // Two-slot proposal bubble (Schedule + Case 2). Slots passed as PROPOSED_SLOTS entries.
-  // If `slotsUnavailable` is true (Edge case), pills render struck-through and only the
-  // "कोई अन्य दिन चुनें" CTA is wired up.
-  function twoSlotProposalBubble(intro, slots, options) {
-    const opts = options || {};
-    const slotsUnavailable = !!opts.slotsUnavailable;
-    const closingLine = opts.closingLine || (slotsUnavailable
-      ? 'कृपया कोई और दिन चुनें।'
-      : 'बताइए कौन-सा ठीक रहेगा?');
-
+  // 2-slot proposal bubble — plain text inside the bubble (markdown-style bold dates).
+  // Returns { row, ctaA, ctaB, ctaChange } so callers can mute or rewire after rendering.
+  function twoSlotProposalBubble(intro, slots, time) {
+    const t = time || '10:15 AM';
     const row = document.createElement('div');
     row.className = 'msg-row bot';
 
-    const pillsHtml = slots.map(s => `
-      <div class="msg-slot-pill${slotsUnavailable ? ' unavailable' : ''}">
-        <div class="msg-slot-pill-date">${s.date}<span class="msg-slot-pill-day">, ${s.day}</span></div>
-        <div class="msg-slot-pill-time">${s.time}</div>
-      </div>
-    `).join('');
+    const slotLines = slots.map(s =>
+      `<div class="msg-text"><strong>${s.date}, ${s.day}</strong> · ${s.time}</div>`
+    ).join('');
 
-    let ctasHtml = '';
-    if (!slotsUnavailable) {
-      slots.forEach((s, i) => {
-        ctasHtml += `<div class="msg-divider"></div>
-          <button class="msg-cta middle" type="button" data-action="pick-${s.id}">
-            <span class="msg-cta-text">${s.ctaShort}</span>
-          </button>`;
-      });
-    }
-    // Final CTA — always picker fallback
-    ctasHtml += `<div class="msg-divider"></div>
-      <button class="msg-cta" type="button" data-action="change">
-        <span class="msg-cta-text">कोई अन्य दिन चुनें</span>
-      </button>`;
+    const ctasHtml = slots.map(s =>
+      `<div class="msg-divider"></div>
+       <button class="msg-cta middle" type="button" data-action="pick-${s.id}">
+         <span class="msg-cta-text">${s.ctaShort}</span>
+       </button>`
+    ).join('') + `
+       <div class="msg-divider"></div>
+       <button class="msg-cta" type="button" data-action="change">
+         <span class="msg-cta-text">कोई अन्य दिन चुनें</span>
+       </button>`;
 
     row.innerHTML = `
       <div class="msg-wrap">
@@ -787,9 +739,11 @@
         <div class="msg-bubble has-cta-below">
           <div class="msg-content">
             <div class="msg-text">${intro}</div>
-            ${pillsHtml}
-            <div class="msg-text">${closingLine}</div>
-            <div class="msg-time">10:15 AM</div>
+            <div class="msg-text">&nbsp;</div>
+            ${slotLines}
+            <div class="msg-text">&nbsp;</div>
+            <div class="msg-text">बताइए कौन-सा ठीक रहेगा?</div>
+            <div class="msg-time">${t}</div>
           </div>
         </div>
         ${ctasHtml}
@@ -818,7 +772,6 @@
     else if (state.case === 'case1') setupCase1Chat();
     else if (state.case === 'case2') setupCase2Chat();
     else if (state.case === 'case3') setupCase3Chat();
-    else if (state.case === 'edge')  setupEdgeChat();
 
     chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'instant' });
   }
@@ -847,90 +800,87 @@
 
     const bubble = twoSlotProposalBubble(
       'आपका नेट इनमें से किसी एक समय पर लग सकता है —',
-      PROPOSED_SLOTS,
-      {}
+      PROPOSED_SLOTS
     );
     chatBody.appendChild(bubble);
     wireTwoSlotCtas(bubble);
   }
 
-  // --- CASE 1: date is confirmed, user must type intent to reschedule ---
+  // --- CASE 1: customer earlier picked slot A from the 2-slot proposal; now wants to change ---
   function setupCase1Chat() {
     chatBody.innerHTML = '';
     netCardStatus.textContent = 'सेटअप बाकी है';
     chatBody.appendChild(prevChatCard('keep the previous chat history as is'));
 
-    chatBody.appendChild(botBubble(
-      ['नेट सेटअप का दिन तय हो गया है।', '&nbsp;', 'नेट <strong>5 मई</strong>, <strong>10 से 1 बजे के बीच</strong> लगेगा।'],
-      '10:15 AM'
-    ));
-    chatBody.appendChild(botBubble(['अब आप आराम करें'], '10:15 AM', true));
+    // Past 2-slot proposal — CTAs muted because this is history
+    const pastProposal = twoSlotProposalBubble(
+      'आपका नेट इनमें से किसी एक समय पर लग सकता है —',
+      PROPOSED_SLOTS,
+      '09:42 AM'
+    );
+    pastProposal.querySelectorAll('.msg-cta').forEach(c => c.classList.add('muted'));
+    chatBody.appendChild(pastProposal);
+
+    // Customer's past reply (plain text, same as CTA label)
+    chatBody.appendChild(userBubble(PAST_PICKED_SLOT.ctaShort, '09:43 AM'));
+
+    // Wiom's past confirmation
+    chatBody.appendChild(botBubble([
+      'तारीख पक्की हो गई।',
+      '&nbsp;',
+      `नेट <strong>${PAST_PICKED_SLOT.date}</strong>, <strong>${PAST_PICKED_SLOT.time} के बीच</strong> लगेगा।`
+    ], '09:43 AM'));
+    chatBody.appendChild(botBubble(['अब आप आराम करें'], '09:43 AM', true));
   }
 
-  // --- CASE 2: WIOM proposed 2 slots, user has NOT confirmed yet ---
+  // --- CASE 2: WIOM proposed 2 slots; user has NOT confirmed yet (live proposal) ---
   function setupCase2Chat() {
     chatBody.innerHTML = '';
     netCardStatus.textContent = 'दिन कन्फर्म करना है';
     chatBody.appendChild(prevChatCard('keep the previous chat history as is'));
 
     const bubble = twoSlotProposalBubble(
-      'क्या इनमें से कोई एक समय आपको ठीक लगेगा?',
-      PROPOSED_SLOTS,
-      {}
+      'आपका नेट इनमें से किसी एक समय पर लग सकता है —',
+      PROPOSED_SLOTS
     );
     chatBody.appendChild(bubble);
     wireTwoSlotCtas(bubble);
   }
 
-  // --- CASE 3: engineer already assigned for the confirmed setup day ---
+  // --- CASE 3: like Case 1, but engineer is already assigned for the picked date ---
   function setupCase3Chat() {
     chatBody.innerHTML = '';
     netCardStatus.textContent = 'सेटअप बाकी है';
     chatBody.appendChild(prevChatCard('keep the previous chat history as is'));
 
+    // Past 2-slot proposal (muted)
+    const pastProposal = twoSlotProposalBubble(
+      'आपका नेट इनमें से किसी एक समय पर लग सकता है —',
+      PROPOSED_SLOTS,
+      '09:42 AM'
+    );
+    pastProposal.querySelectorAll('.msg-cta').forEach(c => c.classList.add('muted'));
+    chatBody.appendChild(pastProposal);
+
+    chatBody.appendChild(userBubble(PAST_PICKED_SLOT.ctaShort, '09:43 AM'));
+    chatBody.appendChild(botBubble([
+      'तारीख पक्की हो गई।',
+      '&nbsp;',
+      `नेट <strong>${PAST_PICKED_SLOT.date}</strong>, <strong>${PAST_PICKED_SLOT.time} के बीच</strong> लगेगा।`
+    ], '09:43 AM'));
+    chatBody.appendChild(botBubble(['अब आप आराम करें'], '09:43 AM', true));
+
+    // Engineer assignment chain
     chatBody.appendChild(botBubble(['नेट सेटअप के लिए इंजीनियर तय हो गया है'], '10:15 AM'));
     chatBody.appendChild(botBubble(
-      ['<strong>5 मई</strong> को रोहित कुमार आपके घर पर नेट लगाने के लिए आ जाएंगे'],
+      [`<strong>${PAST_PICKED_SLOT.date}</strong> को रोहित कुमार आपके घर पर नेट लगाने के लिए आ जाएंगे`],
       '10:15 AM', true
     ));
     chatBody.appendChild(engineerCardBubble('रोहित कुमार'));
   }
 
-  // --- EDGE: WIOM proposed 2 slots, but both got booked before user picked ---
-  function setupEdgeChat() {
-    chatBody.innerHTML = '';
-    netCardStatus.textContent = 'दिन कन्फर्म करना है';
-    chatBody.appendChild(prevChatCard('keep the previous chat history as is'));
-
-    // First, the original proposal as it appeared (now stale — pills struck through)
-    const stale = twoSlotProposalBubble(
-      'क्या इनमें से कोई एक समय आपको ठीक लगेगा?',
-      PROPOSED_SLOTS,
-      { slotsUnavailable: true, closingLine: 'दोनों समय अब भर गए हैं।' }
-    );
-    chatBody.appendChild(stale);
-    // Mute the stale "कोई अन्य दिन चुनें" CTA — a fresh one comes below
-    stale.querySelectorAll('.msg-cta').forEach(c => c.classList.add('muted'));
-
-    // Wiom's apology + fresh CTA to open the picker
-    const apology = botBubbleWithCTA(
-      [
-        'क्षमा करें — आपके चुनने से पहले दोनों समय भर गए।',
-        '&nbsp;',
-        'नीचे दिए गए बटन से कोई और दिन चुनें।'
-      ],
-      '10:18 AM',
-      'दिन और समय चुनें',
-      () => {
-        state.activeCta = apology.querySelector('.msg-cta');
-        showPicker();
-      }
-    );
-    chatBody.appendChild(apology);
-  }
-
   // ============================================================================
-  // 2-SLOT CTA WIRING (shared by Schedule + Case 2)
+  // 2-SLOT CTA WIRING (Schedule + Case 2)
   // ============================================================================
   function wireTwoSlotCtas(bubble) {
     PROPOSED_SLOTS.forEach(slot => {
@@ -938,32 +888,25 @@
       if (btn) btn.addEventListener('click', () => commitProposedSlot(slot, bubble));
     });
     const changeBtn = bubble.querySelector('[data-action="change"]');
-    changeBtn.addEventListener('click', () => {
-      state.activeCta = changeBtn;
-      showPicker();
-    });
+    changeBtn.addEventListener('click', () => onChooseAnotherDay(changeBtn));
   }
 
-  // User tapped one of the two proposed slot CTAs.
+  // User tapped one of the two proposed slot CTAs → user reply uses the CTA text (plain bubble).
   function commitProposedSlot(slot, bubble) {
     if (state.committed) return;
     state.committed = true;
     muteAllCtas();
 
-    // 1. User reply quoting the proposal question
     setTimeout(() => {
-      const quoted = bubble.querySelector('.msg-content .msg-text:last-of-type').textContent;
-      chatBody.appendChild(userReplyWithQuote(quoted, slot.ctaShort, '10:16 AM'));
+      chatBody.appendChild(userBubble(slot.ctaShort, '10:16 AM'));
       scrollChatToBottom();
     }, 200);
 
-    // 2. Typing indicator
     setTimeout(() => {
       chatBody.appendChild(waitingBubble());
       scrollChatToBottom();
     }, 900);
 
-    // 3. Confirmation
     setTimeout(() => {
       const w = document.getElementById('waitingBubble');
       if (w) w.remove();
@@ -977,6 +920,39 @@
     }, 2400);
 
     appendEndOfFlowCard(4400);
+  }
+
+  // User tapped "कोई अन्य दिन चुनें" →
+  //   user bubble "✔️ हो गया" → Wiom typing → Wiom message with CTA → tap CTA opens picker
+  function onChooseAnotherDay(changeBtn) {
+    if (state.committed) return;
+    muteAllCtas();
+
+    setTimeout(() => {
+      chatBody.appendChild(userBubble('✔️ हो गया', '10:16 AM'));
+      scrollChatToBottom();
+    }, 200);
+
+    setTimeout(() => {
+      chatBody.appendChild(waitingBubble());
+      scrollChatToBottom();
+    }, 900);
+
+    setTimeout(() => {
+      const w = document.getElementById('waitingBubble');
+      if (w) w.remove();
+      const ctaRow = botBubbleWithCTA(
+        ['ठीक है।', '&nbsp;', 'नीचे दिए गए बटन से दिन और समय चुनें।'],
+        '10:16 AM',
+        'दिन और समय चुनें',
+        () => {
+          state.activeCta = ctaRow.querySelector('.msg-cta');
+          showPicker();
+        }
+      );
+      chatBody.appendChild(ctaRow);
+      scrollChatToBottom();
+    }, 2200);
   }
 
   function appendEndOfFlowCard(delay) {
@@ -996,7 +972,7 @@
   }
 
   // ============================================================================
-  // KEYBOARD + TYPED INTENT (Case 1 and Case 3 only — user-initiated reschedule)
+  // KEYBOARD + TYPED INTENT (Case 1 / Case 3 — user-initiated reschedule)
   // ============================================================================
   function openKeyboard() {
     if (state.keyboardOpen) return;
@@ -1025,8 +1001,7 @@
     if (state.intentSent || !state.typed) return;
     state.intentSent = true;
 
-    const userMsg = 'नेट लगवाने का दिन बदलना है';
-    chatBody.appendChild(userBubble(userMsg, '10:42 AM'));
+    chatBody.appendChild(userBubble('नेट लगवाने का दिन बदलना है', '10:42 AM'));
 
     inputField.innerHTML = 'यहाँ पूछें....';
     inputField.classList.add('placeholder');
@@ -1043,13 +1018,11 @@
       const w = document.getElementById('waitingBubble');
       if (w) w.remove();
 
-      // Case 3: bot warns that a different engineer will be assigned
       const responseTexts = state.case === 'case3'
         ? ['ठीक है।', '&nbsp;', 'नए दिन के लिए एक दूसरे इंजीनियर को भेजा जाएगा।', '&nbsp;', 'नीचे दिए गए बटन से नया दिन चुनें।']
         : ['ठीक है।', '&nbsp;', 'नीचे दिए गए बटन से नेट लगवाने का दिन बदलें।'];
-      const ctaLabel = 'नेट लगवाने का दिन बदलें';
 
-      const ctaRow = botBubbleWithCTA(responseTexts, '10:42 AM', ctaLabel, () => {
+      const ctaRow = botBubbleWithCTA(responseTexts, '10:42 AM', 'नेट लगवाने का दिन बदलें', () => {
         state.activeCta = ctaRow.querySelector('.msg-cta');
         showPicker();
       });
@@ -1061,111 +1034,51 @@
   sendBtn.addEventListener('click', sendIntent);
   inputField.addEventListener('click', () => {
     if (state.intentSent || state.committed) return;
-    // Typing is only meaningful for Case 1 / Case 3 (reschedule with no inline CTA yet)
     if (state.case === 'case1' || state.case === 'case3') openKeyboard();
   });
 
   // ============================================================================
-  // PICKER POPULATION (per-case context strip + date range)
+  // PICKER POPULATION
   // ============================================================================
-  // Date sets per case:
-  //   case1, case3 → 11 dates (5–15 मई), current = 5 मई
-  //   case2, edge   → 11 dates (5–15 मई), 12 & 13 मई marked current (proposed)
-  //   schedule      → 10 dates (11–20 मई), 12 & 13 मई marked current (proposed)
   function populatePicker() {
     // Context strip
     if (state.case === 'case1' || state.case === 'case3') {
       contextStrip.innerHTML = `
         <div class="context-strip-label">अभी तय है</div>
-        <div class="context-strip-value">5 मई, मंगलवार</div>
-        <div class="context-strip-time">10 से 1 बजे के बीच</div>`;
+        <div class="context-strip-value">${PAST_PICKED_SLOT.date}, ${PAST_PICKED_SLOT.day}</div>
+        <div class="context-strip-time">${PAST_PICKED_SLOT.time}</div>`;
     } else if (state.case === 'case2') {
       contextStrip.innerHTML = `
         <div class="context-strip-label">व्योम ने सुझाए थे</div>
-        <div class="context-strip-value">12 मई · दोपहर 2-5 बजे</div>
-        <div class="context-strip-time">या 13 मई · सुबह 11-2 बजे</div>`;
-    } else if (state.case === 'edge') {
-      contextStrip.innerHTML = `
-        <div class="context-strip-label">सुझाए गए दोनों समय अब भर गए हैं</div>
-        <div class="context-strip-value">12 मई · दोपहर 2-5 बजे · ❌</div>
-        <div class="context-strip-time">13 मई · सुबह 11-2 बजे · ❌</div>`;
+        <div class="context-strip-value">${PROPOSED_SLOTS[0].date} · ${PROPOSED_SLOTS[0].time}</div>
+        <div class="context-strip-time">या ${PROPOSED_SLOTS[1].date} · ${PROPOSED_SLOTS[1].time}</div>`;
     } else {
       // schedule
       contextStrip.innerHTML = `
         <div class="context-strip-label">व्योम ने सुझाए हैं</div>
-        <div class="context-strip-value">12 मई · दोपहर 2-5 बजे</div>
-        <div class="context-strip-time">या 13 मई · सुबह 11-2 बजे</div>`;
+        <div class="context-strip-value">${PROPOSED_SLOTS[0].date} · ${PROPOSED_SLOTS[0].time}</div>
+        <div class="context-strip-time">या ${PROPOSED_SLOTS[1].date} · ${PROPOSED_SLOTS[1].time}</div>`;
     }
 
-    // Date row
-    const dates = (state.case === 'schedule')
-      ? buildScheduleDates()
-      : buildRescheduleDates();
-    dateRow.innerHTML = dates;
+    // Date row — unified 11–20 मई range; per-case 'current' dots differ
+    dateRow.innerHTML = buildDates();
 
-    // For Edge: mark 12 & 13 मई as disabled (both proposed slots are gone)
-    if (state.case === 'edge') {
-      dateRow.querySelectorAll('.date-card').forEach(c => {
-        if (c.dataset.date === '12 मई' || c.dataset.date === '13 मई') {
-          c.classList.add('disabled');
-          c.classList.remove('current');
-        }
-      });
-    }
-
-    // Reset selection state for fresh entry
     state.selectedDate = null;
     state.selectedSlot = null;
     timeSection.classList.remove('visible');
     pickerFooter.classList.remove('visible');
     slotGrid.querySelectorAll('.slot-card').forEach(c => { c.classList.remove('selected'); c.classList.remove('disabled'); });
 
-    // Scroll: schedule → start; reschedule cases → 5 मई is the first 'main' card
-    if (state.case === 'schedule') {
-      dateRow.scrollLeft = 0;
-    } else {
-      // 5 मई = first card; bring 12 मई (proposed) into view for case2/edge
-      if (state.case === 'case2' || state.case === 'edge') {
-        const c = dateRow.querySelector('[data-date="12 मई"]');
-        if (c) requestAnimationFrame(() => { dateRow.scrollLeft = Math.max(0, c.offsetLeft - 16); });
-      } else {
-        dateRow.scrollLeft = 0;
-      }
-    }
+    // Scroll to bring 12 मई into a sensible visible area for everyone
+    const c = dateRow.querySelector('[data-date="12 मई"]');
+    if (c) requestAnimationFrame(() => { dateRow.scrollLeft = Math.max(0, c.offsetLeft - 16); });
   }
 
-  function buildRescheduleDates() {
-    // 5–15 मई. For case2: 12 & 13 are 'current' (proposed). For case1/case3: 5 is 'current'.
-    const days = [
-      { d:5, day:'मंगलवार', short:'मंगल' },
-      { d:6, day:'बुधवार',  short:'बुध' },
-      { d:7, day:'गुरुवार', short:'गुरु' },
-      { d:8, day:'शुक्रवार', short:'शुक्र' },
-      { d:9, day:'शनिवार',  short:'शनि' },
-      { d:10, day:'रविवार', short:'रवि',   disabled:true },
-      { d:11, day:'सोमवार', short:'सोम' },
-      { d:12, day:'मंगलवार', short:'मंगल' },
-      { d:13, day:'बुधवार',  short:'बुध' },
-      { d:14, day:'गुरुवार', short:'गुरु' },
-      { d:15, day:'शुक्रवार', short:'शुक्र' },
-    ];
-    return days.map(x => {
-      const cls = ['date-card'];
-      if (x.disabled) cls.push('disabled');
-      if ((state.case === 'case1' || state.case === 'case3') && x.d === 5) cls.push('current');
-      if ((state.case === 'case2' || state.case === 'edge') && (x.d === 12 || x.d === 13)) cls.push('current');
-      return `<div class="${cls.join(' ')}" data-date="${x.d} मई" data-day="${x.day}">
-        <div class="date-day">${x.short}</div><div class="date-num">${x.d}</div>
-      </div>`;
-    }).join('');
-  }
-
-  function buildScheduleDates() {
-    // 11–20 मई. 12 & 13 are 'current' (proposed). One disabled day = 16 मई (शनि).
+  function buildDates() {
     const days = [
       { d:11, day:'सोमवार',  short:'सोम' },
-      { d:12, day:'मंगलवार', short:'मंगल', current:true },
-      { d:13, day:'बुधवार',  short:'बुध',  current:true },
+      { d:12, day:'मंगलवार', short:'मंगल' },
+      { d:13, day:'बुधवार',  short:'बुध' },
       { d:14, day:'गुरुवार', short:'गुरु' },
       { d:15, day:'शुक्रवार', short:'शुक्र' },
       { d:16, day:'शनिवार',  short:'शनि', disabled:true },
@@ -1174,11 +1087,19 @@
       { d:19, day:'मंगलवार', short:'मंगल' },
       { d:20, day:'बुधवार',  short:'बुध' },
     ];
+    // Current-dot rules per case:
+    //   schedule / case2  → 12 + 13 मई (both proposed)
+    //   case1 / case3     → 12 मई only (the date already picked)
+    const currentDates = (state.case === 'schedule' || state.case === 'case2')
+      ? new Set(['12 मई','13 मई'])
+      : new Set(['12 मई']);
+
     return days.map(x => {
+      const dateLabel = `${x.d} मई`;
       const cls = ['date-card'];
       if (x.disabled) cls.push('disabled');
-      if (x.current)  cls.push('current');
-      return `<div class="${cls.join(' ')}" data-date="${x.d} मई" data-day="${x.day}">
+      if (currentDates.has(dateLabel)) cls.push('current');
+      return `<div class="${cls.join(' ')}" data-date="${dateLabel}" data-day="${x.day}">
         <div class="date-day">${x.short}</div><div class="date-num">${x.d}</div>
       </div>`;
     }).join('');
@@ -1187,9 +1108,8 @@
   // ============================================================================
   // PICKER INTERACTION
   // ============================================================================
-  // Per-date slot availability — booked slots are disabled with a toast.
   const slotAvailability = {
-    '11 मई': ['शाम'],         // demo: only शाम free on 11 मई
+    '11 मई': ['शाम'],   // demo: only शाम is free on 11 मई
   };
 
   dateRow.addEventListener('click', (e) => {
@@ -1205,7 +1125,6 @@
     state.selectedDay  = card.dataset.day;
     timeSection.classList.add('visible');
 
-    // Apply slot availability for the selected date
     const avail = slotAvailability[state.selectedDate];
     document.querySelectorAll('.slot-card').forEach(slot => {
       const slotName = slot.dataset.slotName;
@@ -1240,10 +1159,8 @@
     else pickerFooter.classList.remove('visible');
   }
 
-  // Back button — no commit, CTAs in chat stay active so user can retry.
   pickerBack.addEventListener('click', showChatFromPicker);
 
-  // Confirm from picker → return to chat with confirmation flow.
   confirmBtn.addEventListener('click', () => {
     if (state.committed) return;
     state.committed = true;
@@ -1252,34 +1169,26 @@
     state.intentSent = true;
 
     const slotInResponse = state.selectedSlot.replace('तक', 'के बीच');
-    const wasReschedule = (state.case === 'case1' || state.case === 'case2' || state.case === 'case3' || state.case === 'edge');
+    const isReschedule = (state.case === 'case1' || state.case === 'case2' || state.case === 'case3');
 
-    // 1. User quote-reply
     setTimeout(() => {
-      const quotedBotMsg = state.case === 'schedule' || state.case === 'case2'
-        ? 'बताइए कौन-सा ठीक रहेगा?'
-        : (state.case === 'edge'
-          ? 'नीचे दिए गए बटन से कोई और दिन चुनें।'
-          : 'नीचे दिए गए बटन से नेट लगवाने का दिन बदलें।');
       chatBody.appendChild(userReplyWithQuote(
-        quotedBotMsg,
+        'नीचे दिए गए बटन से दिन और समय चुनें।',
         `✔️ ${state.selectedDate}, ${state.selectedSlot.replace('तक','').trim()}`,
         '10:43 AM'
       ));
       scrollChatToBottom();
     }, 400);
 
-    // 2. Wiom typing
     setTimeout(() => {
       chatBody.appendChild(waitingBubble());
       scrollChatToBottom();
     }, 1200);
 
-    // 3. Confirmation bubble
     setTimeout(() => {
       const w = document.getElementById('waitingBubble');
       if (w) w.remove();
-      const headline = wasReschedule ? 'नया दिन पक्का हो गया।' : 'तारीख पक्की हो गई।';
+      const headline = isReschedule ? 'नया दिन पक्का हो गया।' : 'तारीख पक्की हो गई।';
       chatBody.appendChild(botBubble([
         headline,
         '&nbsp;',
@@ -1293,19 +1202,17 @@
   });
 
   // ============================================================================
-  // ROUTING — context → scenarios → chat
+  // ROUTING
   // ============================================================================
   contextNextBtn.addEventListener('click', showScenario);
   document.getElementById('scenarioScheduleCard').addEventListener('click', () => { state.case = 'schedule'; startChat(); });
   document.getElementById('scenarioCase1Card').addEventListener('click',    () => { state.case = 'case1';    startChat(); });
   document.getElementById('scenarioCase2Card').addEventListener('click',    () => { state.case = 'case2';    startChat(); });
   document.getElementById('scenarioCase3Card').addEventListener('click',    () => { state.case = 'case3';    startChat(); });
-  document.getElementById('scenarioEdgeCard').addEventListener('click',     () => { state.case = 'edge';     startChat(); });
-
   resetBtn.addEventListener('click', () => location.reload());
 
   // ============================================================================
-  // FIGMA-STYLE HOTSPOT HINTS — pulse current tappable areas on empty taps
+  // FIGMA-STYLE HOTSPOT HINTS
   // ============================================================================
   const hotspotSelector = '.input-field, .send-btn, .icon-btn, .msg-cta:not(.muted), .date-card, .slot-card, .btn-primary, .reset-fab, .prev-chat-card.restart, .btn-yellow-cta, .scenario-card';
   device.addEventListener('click', (e) => {
@@ -1323,8 +1230,6 @@
       if (restartCard) {
         targets = [restartCard];
       } else if (!state.intentSent && !state.committed) {
-        // Case 1 / Case 3: chatbox is the way forward
-        // Schedule / Case 2 / Edge: active CTAs in the latest bubble
         const activeCtas = chatBody.querySelectorAll('.msg-cta:not(.muted)');
         if (activeCtas.length) targets = Array.from(activeCtas);
         if (state.case === 'case1' || state.case === 'case3') targets.push(inputField);
