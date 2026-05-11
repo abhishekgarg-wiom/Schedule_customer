@@ -283,6 +283,62 @@
   .toast { position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%) translateY(8px); background: rgba(22, 16, 33, 0.92); color: #FFFFFF; padding: 12px 20px; border-radius: var(--r-full); font-size: 14px; font-weight: 400; line-height: 20px; text-align: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 220ms ease-out, transform 220ms ease-out; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); white-space: nowrap; max-width: calc(100% - 48px); }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+  /* Lock screen + Wiom notification (Schedule case entry point) */
+  .lock-screen {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(140% 80% at 50% 0%, #3b1f4f 0%, #1f1230 55%, #14091f 100%);
+    display: flex; flex-direction: column;
+    padding: 16px;
+    overflow: hidden;
+    color: #FFFFFF;
+  }
+  .lock-status-bar {
+    flex: 0 0 auto;
+    height: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    color: #FFFFFF;
+    font-family: var(--ff-roboto);
+    font-weight: 500; font-size: 14px;
+  }
+  .lock-status-bar .material-icons { font-size: 16px; }
+  .lock-time { text-align: center; margin-top: 56px; }
+  .lock-time-clock { font-size: 72px; font-weight: 300; line-height: 1; letter-spacing: -1px; }
+  .lock-time-date { font-size: 14px; color: rgba(255,255,255,0.78); margin-top: 6px; }
+  .lock-notifications { margin-top: 48px; display: flex; flex-direction: column; gap: 8px; }
+  .lock-notif {
+    background: rgba(255,255,255,0.10);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    animation: notifSlideIn 460ms cubic-bezier(0.32, 0.72, 0, 1) 220ms both;
+  }
+  @keyframes notifSlideIn {
+    from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .lock-notif:active { background: rgba(255,255,255,0.18); }
+  .lock-notif-head { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.86); }
+  .lock-notif-icon {
+    width: 20px; height: 20px; border-radius: 5px;
+    background: #D9008D; color: #FFFFFF;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-weight: 700; font-size: 10px;
+    flex: 0 0 auto;
+  }
+  .lock-notif-app-name { font-weight: 600; }
+  .lock-notif-time { margin-left: auto; color: rgba(255,255,255,0.6); font-size: 11px; }
+  .lock-notif-title { font-size: 14px; font-weight: 600; line-height: 18px; color: #FFFFFF; }
+  .lock-notif-body { font-size: 13px; line-height: 18px; color: rgba(255,255,255,0.85); }
+  .lock-foot { margin-top: auto; text-align: center; color: rgba(255,255,255,0.55); font-size: 12px; padding-bottom: 28px; }
+  .lock-foot .material-icons { font-size: 14px; vertical-align: -2px; margin-right: 2px; }
+
   /* Reset FAB */
   .reset-fab { position: fixed; bottom: 16px; right: 16px; z-index: 1000; background: #161021; color: #FAF9FC; border: none; border-radius: var(--r-full); padding: var(--s-8) var(--s-16); font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: var(--s-8); box-shadow: var(--sh-md); opacity: 0.85; }
   .reset-fab:hover { opacity: 1; }
@@ -372,6 +428,43 @@
         </div>
 
         <div class="context-cta-wrap"></div>
+      </div>
+    </section>
+
+    <!-- ============ NOTIFICATION (LOCK) SCREEN — Schedule entry ============ -->
+    <section class="screen" id="notificationScreen">
+      <div class="lock-screen">
+        <div class="lock-status-bar">
+          <span>04:34 PM</span>
+          <div class="status-bar-icons" style="display: flex; gap: 8px;">
+            <span class="material-icons">signal_wifi_4_bar</span>
+            <span class="material-icons">signal_cellular_4_bar</span>
+            <span style="font-size: 14px;">50%</span>
+            <span class="material-icons">battery_full</span>
+          </div>
+        </div>
+
+        <div class="lock-time">
+          <div class="lock-time-clock">04:34</div>
+          <div class="lock-time-date">मंगलवार, 11 मई</div>
+        </div>
+
+        <div class="lock-notifications">
+          <div class="lock-notif" id="wiomNotif">
+            <div class="lock-notif-head">
+              <div class="lock-notif-icon">व्यो</div>
+              <div class="lock-notif-app-name">Wiom</div>
+              <div class="lock-notif-time">अभी</div>
+            </div>
+            <div class="lock-notif-title">नेट लगने की तारीख तय हो गई</div>
+            <div class="lock-notif-body">2 दिन सुझाए गए हैं — चुनिए कौन-सा ठीक है।</div>
+          </div>
+        </div>
+
+        <div class="lock-foot">
+          <span class="material-icons">touch_app</span>
+          notification पर tap करें
+        </div>
       </div>
     </section>
 
@@ -568,10 +661,11 @@
   // ============================================================================
   // DOM REFS
   // ============================================================================
-  const contextScreen   = document.getElementById('contextScreen');
-  const scenarioScreen  = document.getElementById('scenarioScreen');
-  const chatScreen      = document.getElementById('chatScreen');
-  const pickerScreen    = document.getElementById('pickerScreen');
+  const contextScreen      = document.getElementById('contextScreen');
+  const scenarioScreen     = document.getElementById('scenarioScreen');
+  const notificationScreen = document.getElementById('notificationScreen');
+  const chatScreen         = document.getElementById('chatScreen');
+  const pickerScreen       = document.getElementById('pickerScreen');
   const chatBody        = document.getElementById('chatBody');
   const sendBtn         = document.getElementById('sendBtn');
   const inputField      = document.getElementById('inputField');
@@ -768,9 +862,20 @@
     contextScreen.classList.add('left');
     scenarioScreen.classList.add('active');
   }
-  function startChat() {
+  // For Schedule: show the lock-screen with a Wiom notification first.
+  function showNotification() {
     scenarioScreen.classList.remove('active');
     scenarioScreen.classList.add('left');
+    notificationScreen.classList.add('active');
+  }
+  function startChat(fromNotification) {
+    if (fromNotification) {
+      notificationScreen.classList.remove('active');
+      notificationScreen.classList.add('left');
+    } else {
+      scenarioScreen.classList.remove('active');
+      scenarioScreen.classList.add('left');
+    }
     chatScreen.classList.add('active');
 
     if (state.case === 'schedule') setupScheduleChat();
@@ -1185,16 +1290,18 @@
   // ROUTING
   // ============================================================================
   contextNextBtn.addEventListener('click', showScenario);
-  document.getElementById('scenarioScheduleCard').addEventListener('click', () => { state.case = 'schedule'; startChat(); });
+  // Schedule case → lock screen with notification first → tap notification → chat
+  document.getElementById('scenarioScheduleCard').addEventListener('click', () => { state.case = 'schedule'; showNotification(); });
   document.getElementById('scenarioCase1Card').addEventListener('click',    () => { state.case = 'case1';    startChat(); });
   document.getElementById('scenarioCase2Card').addEventListener('click',    () => { state.case = 'case2';    startChat(); });
   document.getElementById('scenarioCase3Card').addEventListener('click',    () => { state.case = 'case3';    startChat(); });
+  document.getElementById('wiomNotif').addEventListener('click', () => startChat(true));
   resetBtn.addEventListener('click', () => location.reload());
 
   // ============================================================================
   // FIGMA-STYLE HOTSPOT HINTS
   // ============================================================================
-  const hotspotSelector = '.input-field, .send-btn, .icon-btn, .msg-cta:not(.muted), .date-card, .slot-card, .btn-primary, .reset-fab, .prev-chat-card.restart, .btn-yellow-cta, .scenario-card';
+  const hotspotSelector = '.input-field, .send-btn, .icon-btn, .msg-cta:not(.muted), .date-card, .slot-card, .btn-primary, .reset-fab, .prev-chat-card.restart, .btn-yellow-cta, .scenario-card, .lock-notif';
   device.addEventListener('click', (e) => {
     if (e.target.closest(hotspotSelector)) return;
     showHotspotHints();
@@ -1205,6 +1312,8 @@
       targets = [contextNextBtn];
     } else if (scenarioScreen.classList.contains('active')) {
       targets = Array.from(scenarioScreen.querySelectorAll('.scenario-card'));
+    } else if (notificationScreen.classList.contains('active')) {
+      targets = [document.getElementById('wiomNotif')];
     } else if (chatScreen.classList.contains('active')) {
       const restartCard = chatBody.querySelector('.prev-chat-card.restart');
       if (restartCard) {
