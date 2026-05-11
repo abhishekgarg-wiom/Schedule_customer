@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#D9008D" />
-<title>नेट सेटअप — व्योम · Schedule</title>
+<title>नेट सेटअप — व्योम · Schedule & Reschedule</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,6 @@
 
 <style>
   :root {
-    /* === Wiom tokens === */
     --wiom-bg-default: #FAF9FC;
     --wiom-bg-subtle: #F1EDF7;
     --wiom-bg-muted: #E8E4F0;
@@ -40,7 +39,6 @@
     --wiom-icon-non-action: #A7A1B2;
     --wiom-icon-brand: #D9008D;
 
-    /* chat-specific surfaces */
     --chat-bg-pri: #FFFFFF;
     --chat-bg-sec: #F5F6F7;
     --chat-bubble-bot: #EBEDF0;
@@ -48,20 +46,16 @@
     --chat-quote-bar: #B6B9BF;
     --chat-divider: #DCDEE0;
 
-    /* spacing */
     --s-4: 4px;  --s-8: 8px;  --s-12: 12px; --s-16: 16px;
     --s-24: 24px; --s-32: 32px; --s-40: 40px; --s-48: 48px; --s-72: 72px;
 
-    /* radius */
     --r-tiny: 4px; --r-small: 8px; --r-medium: 12px;
     --r-large: 16px; --r-xlarge: 24px; --r-full: 9999px;
 
-    /* shadow */
     --sh-md: 0 2px 6px 0 rgba(0,0,0,0.15);
     --sh-lg: 0 4px 12px 0 rgba(0,0,0,0.15);
     --sh-xl: 0 8px 24px 0 rgba(0,0,0,0.15);
 
-    /* type */
     --ff: 'Noto Sans', 'Noto Sans Devanagari', sans-serif;
     --ff-roboto: 'Roboto', sans-serif;
   }
@@ -77,74 +71,23 @@
   }
   button { font-family: inherit; cursor: pointer; }
 
-  /* ===== Stage ===== */
-  .stage {
-    height: 100vh; height: 100dvh;
-    width: 100vw;
-    display: flex; align-items: center; justify-content: center;
-    padding: 0;
-  }
-  .device {
-    width: 100%; height: 100%;
-    background: var(--chat-bg-pri);
-    overflow: hidden;
-    position: relative;
-    display: flex; flex-direction: column;
-  }
+  .stage { height: 100vh; height: 100dvh; width: 100vw; display: flex; align-items: center; justify-content: center; padding: 0; }
+  .device { width: 100%; height: 100%; background: var(--chat-bg-pri); overflow: hidden; position: relative; display: flex; flex-direction: column; }
   @media (min-width: 768px) {
     .stage { padding: var(--s-32); }
-    .device {
-      width: 390px;
-      height: min(844px, 100%);
-      max-height: 844px;
-      border-radius: 40px;
-      box-shadow: var(--sh-xl), 0 0 0 8px #1f1830, 0 0 0 10px #2a2238;
-    }
+    .device { width: 390px; height: min(844px, 100%); max-height: 844px; border-radius: 40px; box-shadow: var(--sh-xl), 0 0 0 8px #1f1830, 0 0 0 10px #2a2238; }
   }
 
-  /* ===== Screens ===== */
-  .screen {
-    position: absolute;
-    inset: 0;
-    display: flex; flex-direction: column;
-    background: var(--chat-bg-pri);
-    transform: translateX(100%);
-    transition: transform 280ms cubic-bezier(0.32, 0.72, 0, 1);
-    will-change: transform;
-  }
+  .screen { position: absolute; inset: 0; display: flex; flex-direction: column; background: var(--chat-bg-pri); transform: translateX(100%); transition: transform 280ms cubic-bezier(0.32, 0.72, 0, 1); will-change: transform; }
   .screen.active { transform: translateX(0); }
   .screen.left { transform: translateX(-100%); }
 
-  /* ===== Phone status bar (mock) ===== */
-  .status-bar {
-    flex: 0 0 auto;
-    height: 24px;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--chat-bg-pri);
-    font-family: var(--ff-roboto);
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--wiom-text-default);
-  }
+  .status-bar { flex: 0 0 auto; height: 24px; padding: 8px; display: flex; align-items: center; justify-content: space-between; background: var(--chat-bg-pri); font-family: var(--ff-roboto); font-weight: 500; font-size: 14px; color: var(--wiom-text-default); }
   .status-bar-icons { display: flex; align-items: center; gap: 8px; }
   .status-bar-icons .material-icons { font-size: 16px; }
 
-  /* ===== Chat top app bar ===== */
-  .chat-top-bar {
-    flex: 0 0 auto;
-    background: var(--chat-bg-pri);
-    border-bottom: 1px solid var(--wiom-stroke-default);
-    padding: var(--s-8) var(--s-4) var(--s-8) var(--s-12);
-    display: flex; gap: var(--s-4); align-items: center;
-  }
-  .chat-top-bar-left {
-    flex: 1; min-width: 0;
-    display: flex; align-items: center; gap: var(--s-8);
-    height: 48px;
-  }
+  .chat-top-bar { flex: 0 0 auto; background: var(--chat-bg-pri); border-bottom: 1px solid var(--wiom-stroke-default); padding: var(--s-8) var(--s-4) var(--s-8) var(--s-12); display: flex; gap: var(--s-4); align-items: center; }
+  .chat-top-bar-left { flex: 1; min-width: 0; display: flex; align-items: center; gap: var(--s-8); height: 48px; }
   .wiom-avatar { width: 48px; height: 48px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
   .wiom-avatar svg { width: 100%; height: 100%; display: block; }
   .icon-btn svg { width: 48px; height: 48px; display: block; }
@@ -152,80 +95,35 @@
   .chat-top-name { font-weight: 500; font-size: 14px; line-height: 20px; color: var(--wiom-text-default); }
   .chat-top-status { font-weight: 400; font-size: 10px; line-height: 14px; color: var(--wiom-text-sec); }
   .chat-top-actions { display: flex; align-items: center; }
-  .icon-btn {
-    width: 48px; height: 48px;
-    background: transparent; border: none;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: var(--r-large);
-    color: var(--wiom-icon-action);
-    flex: 0 0 auto;
-  }
+  .icon-btn { width: 48px; height: 48px; background: transparent; border: none; display: flex; align-items: center; justify-content: center; border-radius: var(--r-large); color: var(--wiom-icon-action); flex: 0 0 auto; }
   .icon-btn:hover { background: var(--chat-bg-sec); }
 
-  /* ===== Sticky net card ===== */
   .sticky-net { flex: 0 0 auto; background: var(--chat-bg-pri); padding: var(--s-12) var(--s-16); display: flex; justify-content: center; }
-  .net-card {
-    width: 100%;
-    background: var(--wiom-bg-default);
-    border-radius: var(--r-large);
-    box-shadow: var(--sh-lg);
-    padding: var(--s-12);
-    display: flex; gap: var(--s-12); align-items: center;
-  }
+  .net-card { width: 100%; background: var(--wiom-bg-default); border-radius: var(--r-large); box-shadow: var(--sh-lg); padding: var(--s-12); display: flex; gap: var(--s-12); align-items: center; }
   .net-card-icon { width: 24px; height: 24px; flex: 0 0 auto; color: var(--wiom-icon-action); display: flex; align-items: center; justify-content: center; }
   .net-card-icon .material-icons { font-size: 24px; }
-  .net-card-icon svg { width: 24px; height: 24px; display: block; }
   .net-card-text { flex: 1; display: flex; flex-direction: column; gap: var(--s-4); min-width: 0; }
   .net-card-heading { font-size: 12px; line-height: 16px; color: var(--wiom-text-sec); max-width: 176px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .net-card-status { display: flex; gap: 4px; align-items: baseline; }
   .net-card-status-label { font-size: 12px; line-height: 16px; color: var(--wiom-text-sec); }
   .net-card-status-value { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--wiom-text-default); }
 
-  /* ===== Chat body ===== */
-  .chat-body {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    background: var(--chat-bg-sec);
-    padding: var(--s-16) var(--s-12) var(--s-12);
-    display: flex; flex-direction: column;
-    gap: var(--s-12);
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
+  .chat-body { flex: 1 1 auto; overflow-y: auto; background: var(--chat-bg-sec); padding: var(--s-16) var(--s-12) var(--s-12); display: flex; flex-direction: column; gap: var(--s-12); scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; }
   .chat-body::-webkit-scrollbar { display: none; }
 
-  .prev-chat-card {
-    background: #FFDA40;
-    border-radius: 8px;
-    padding: var(--s-12) var(--s-16);
-    display: flex; flex-direction: column; gap: var(--s-8);
-    align-items: center;
-    text-align: center;
-    box-shadow: 0px 1px 1.5px rgba(0,0,0,0.15);
-    align-self: stretch;
-  }
+  .prev-chat-card { background: #FFDA40; border-radius: 8px; padding: var(--s-12) var(--s-16); display: flex; flex-direction: column; gap: var(--s-8); align-items: center; text-align: center; box-shadow: 0px 1px 1.5px rgba(0,0,0,0.15); align-self: stretch; }
   .prev-chat-card-note { font-size: 12px; line-height: 16px; font-weight: 400; color: #D92130; }
   .prev-chat-card-text { font-size: 16px; line-height: 24px; font-weight: 700; color: #161021; }
   .prev-chat-card.restart { cursor: pointer; }
 
-  /* ===== Bubbles ===== */
   .msg-row { display: flex; width: 100%; animation: fadeUp 220ms ease-out; }
   .msg-row.bot { padding-left: var(--s-12); padding-right: var(--s-72); }
   .msg-row.user { padding-left: var(--s-72); padding-right: var(--s-12); justify-content: flex-end; }
 
   .msg-wrap { position: relative; max-width: 280px; display: flex; flex-direction: column; }
   .msg-bubble { padding: var(--s-4); display: flex; flex-direction: column; gap: var(--s-4); }
-  .msg-row.bot .msg-bubble {
-    background: var(--chat-bubble-bot);
-    border-radius: 0 var(--r-medium) var(--r-medium) var(--r-medium);
-    align-items: flex-end;
-  }
-  .msg-row.user .msg-bubble {
-    background: var(--chat-bubble-user);
-    border-radius: var(--r-medium) 0 var(--r-medium) var(--r-medium);
-    align-items: flex-end;
-  }
+  .msg-row.bot .msg-bubble { background: var(--chat-bubble-bot); border-radius: 0 var(--r-medium) var(--r-medium) var(--r-medium); align-items: flex-end; }
+  .msg-row.user .msg-bubble { background: var(--chat-bubble-user); border-radius: var(--r-medium) 0 var(--r-medium) var(--r-medium); align-items: flex-end; }
   .msg-row.bot .msg-bubble.has-cta-below { border-radius: 0 var(--r-medium) 0 0; }
   .msg-row.bot.follow-up .msg-bubble { border-radius: var(--r-medium); }
   .msg-row.user.follow-up .msg-bubble { border-radius: var(--r-medium); }
@@ -236,43 +134,54 @@
 
   .msg-content { padding: var(--s-8); display: flex; flex-direction: column; gap: var(--s-4); width: 100%; align-items: flex-start; }
   .msg-text { font-size: 14px; line-height: 20px; font-weight: 400; color: var(--wiom-text-default); max-width: 228px; }
-  .msg-text.title { font-weight: 700; font-size: 16px; line-height: 24px; }
   .msg-text strong, .msg-text .accent { font-weight: 700; }
   .msg-time { font-size: 10px; line-height: 1.2; color: var(--wiom-text-hint); align-self: flex-end; display: flex; align-items: center; gap: 4px; }
   .msg-time .material-icons { font-size: 12px; color: var(--wiom-text-hint); }
 
-  /* Inline CTA — sibling of bubble, joined by divider line */
-  .msg-divider { height: 1px; background: var(--chat-divider); width: 100%; }
-  .msg-cta {
-    background: var(--chat-bubble-bot);
-    border: none;
+  /* ===== Scannable slot pill (used inside bot bubble for 2-slot proposals) =====
+     Each proposed date/time gets its own pill inside the bubble so the user can
+     scan options quickly without parsing a long sentence. */
+  .msg-slot-pill {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex; flex-direction: column;
+    gap: 2px;
     width: 100%;
-    padding: var(--s-12) var(--s-8);
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 0 0 var(--r-medium) var(--r-medium);
-    cursor: pointer;
+    max-width: 228px;
+    margin: 2px 0;
   }
+  .msg-slot-pill-date { font-weight: 700; font-size: 14px; line-height: 20px; color: var(--wiom-text-default); }
+  .msg-slot-pill-time { font-size: 13px; line-height: 18px; color: var(--wiom-text-sec); font-weight: 500; }
+  .msg-slot-pill-day { font-weight: 400; color: var(--wiom-text-sec); }
+  /* "unavailable" tone for edge-case proposals that have lapsed */
+  .msg-slot-pill.unavailable { background: rgba(255, 255, 255, 0.35); }
+  .msg-slot-pill.unavailable .msg-slot-pill-date,
+  .msg-slot-pill.unavailable .msg-slot-pill-time { color: var(--wiom-text-disabled); text-decoration: line-through; }
+
+  /* Inline CTA — sibling of bubble */
+  .msg-divider { height: 1px; background: var(--chat-divider); width: 100%; }
+  .msg-cta { background: var(--chat-bubble-bot); border: none; width: 100%; padding: var(--s-12) var(--s-8); display: flex; align-items: center; justify-content: center; border-radius: 0 0 var(--r-medium) var(--r-medium); cursor: pointer; }
   .msg-cta-text { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--wiom-text-brand); text-align: center; }
   .msg-cta.muted .msg-cta-text { color: var(--wiom-text-hint); }
   .msg-cta.muted { cursor: default; pointer-events: none; }
-  /* middle CTA (between two dividers): no rounded corners */
   .msg-cta.middle { border-radius: 0; }
 
-  /* Reply with quote (user side) */
-  .reply-quote {
-    background: var(--chat-bubble-bot);
-    border-radius: var(--r-small);
-    overflow: hidden;
-    display: flex; align-items: stretch;
-    width: 100%;
-  }
+  .reply-quote { background: var(--chat-bubble-bot); border-radius: var(--r-small); overflow: hidden; display: flex; align-items: stretch; width: 100%; }
   .reply-quote-bar { background: var(--chat-quote-bar); width: 4px; flex: 0 0 auto; border-radius: var(--r-small) 0 0 var(--r-small); }
   .reply-quote-text { padding: var(--s-8); display: flex; flex-direction: column; gap: var(--s-4); min-width: 0; flex: 1; }
   .reply-quote-author { font-size: 12px; line-height: 16px; font-weight: 600; color: var(--wiom-text-default); max-width: 224px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
   .reply-quote-msg { font-size: 12px; line-height: 16px; font-weight: 400; color: var(--wiom-text-sec); max-width: 224px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
   .msg-row.user .msg-bubble { align-items: flex-start; }
 
-  /* Typing bubble */
+  /* Engineer card (Case 3) */
+  .engineer-card { background: var(--chat-bubble-bot); border-radius: var(--r-medium); padding: 16px; width: 280px; display: flex; gap: 12px; align-items: center; }
+  .engineer-card-avatar { width: 40px; height: 40px; background: var(--chat-bg-pri); border-radius: 24px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  .engineer-card-avatar .material-icons { font-size: 24px; color: var(--wiom-icon-action); }
+  .engineer-card-name { flex: 1; font-size: 14px; font-weight: 600; line-height: 20px; color: var(--wiom-text-default); }
+  .engineer-card-call { background: transparent; border: none; padding: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex: 0 0 auto; color: var(--wiom-icon-brand); }
+  .engineer-card-call .material-icons { font-size: 24px; color: var(--wiom-icon-brand); }
+
   .waiting-bubble { padding: var(--s-12); display: flex; align-items: center; gap: var(--s-8); background: var(--chat-bubble-bot); border-radius: 0 var(--r-medium) var(--r-medium) var(--r-medium); }
   .waiting-dots { width: 36px; height: 20px; display: flex; align-items: center; justify-content: center; gap: 4px; }
   .waiting-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--wiom-text-hint); animation: dotPulse 1.2s ease-in-out infinite; }
@@ -281,40 +190,33 @@
   @keyframes dotPulse { 0%, 60%, 100% { opacity: 0.35; transform: scale(0.8); } 30% { opacity: 1; transform: scale(1); } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ===== Chat input ===== */
   .chat-input { flex: 0 0 auto; background: var(--chat-bg-pri); padding: var(--s-12); display: flex; gap: var(--s-8); align-items: flex-end; position: relative; z-index: 2; }
-  .input-field {
-    flex: 1; background: var(--chat-bg-pri);
-    border: 1px solid var(--wiom-stroke-default);
-    border-radius: var(--r-xlarge);
-    padding: var(--s-12) var(--s-16);
-    min-height: 48px;
-    display: flex; align-items: center;
-    font-size: 16px; line-height: 24px;
-    color: var(--wiom-text-default);
-    cursor: text;
-  }
+  .input-field { flex: 1; background: var(--chat-bg-pri); border: 1px solid var(--wiom-stroke-default); border-radius: var(--r-xlarge); padding: var(--s-12) var(--s-16); min-height: 48px; display: flex; align-items: center; font-size: 16px; line-height: 24px; color: var(--wiom-text-default); cursor: text; }
   .input-field.placeholder { color: var(--wiom-text-hint); }
   .input-field .caret { display: inline-block; width: 1.5px; height: 18px; background: var(--wiom-bg-brand); margin-left: 1px; animation: caretBlink 1s steps(2) infinite; vertical-align: middle; }
   @keyframes caretBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
-  .send-btn {
-    width: 48px; height: 48px;
-    border-radius: var(--r-xlarge);
-    background: var(--wiom-bg-brand);
-    border: none;
-    display: flex; align-items: center; justify-content: center;
-    color: #FFFFFF;
-    flex: 0 0 auto;
-  }
+  .send-btn { width: 48px; height: 48px; border-radius: var(--r-xlarge); background: var(--wiom-bg-brand); border: none; display: flex; align-items: center; justify-content: center; color: #FFFFFF; flex: 0 0 auto; }
   .send-btn:disabled { background: var(--wiom-text-hint); cursor: not-allowed; }
   .send-btn:not(:disabled):hover { background: var(--wiom-bg-brand-hover); }
 
-  /* ===== Picker screen ===== */
+  /* Keyboard mock */
+  .keyboard { flex: 0 0 auto; background: #D1D4DB; height: 0; overflow: hidden; transition: height 220ms cubic-bezier(0.32, 0.72, 0, 1); display: flex; flex-direction: column; }
+  .keyboard.open { height: 256px; }
+  .kb-suggestions { height: 44px; padding: 0 8px; display: flex; align-items: center; gap: 8px; background: #D1D4DB; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .kb-suggestions .kb-sg-icon { width: 22px; height: 22px; color: var(--wiom-text-default); display: flex; align-items: center; justify-content: center; opacity: 0.7; }
+  .kb-suggestions .kb-sg-icon .material-icons { font-size: 18px; }
+  .kb-rows { flex: 1; padding: 6px 4px; display: flex; flex-direction: column; gap: 8px; }
+  .kb-row { display: flex; gap: 4px; justify-content: center; }
+  .kb-key { flex: 1; height: 36px; background: #FFFFFF; border-radius: 5px; box-shadow: 0 1px 0 rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 400; color: var(--wiom-text-default); max-width: 32px; }
+  .kb-key.wide { max-width: 48px; }
+  .kb-key.space { max-width: none; flex: 4; }
+  .kb-key.modifier { background: #ABAFB7; color: var(--wiom-text-default); }
+  .kb-key .material-icons { font-size: 18px; }
+
+  /* Picker */
   .picker-header { flex: 0 0 auto; padding: var(--s-12) var(--s-16); background: var(--chat-bg-pri); border-bottom: 1px solid var(--wiom-stroke-default); display: flex; align-items: center; gap: var(--s-12); }
   .picker-title { font-weight: 500; font-size: 20px; line-height: 28px; }
-
   .picker-body { flex: 1 1 auto; overflow-y: auto; padding: var(--s-16) var(--s-16) var(--s-32); display: flex; flex-direction: column; gap: var(--s-24); background: var(--wiom-bg-default); }
-
   .context-strip { background: var(--wiom-bg-info-subtle); border-radius: var(--r-medium); padding: var(--s-12) var(--s-16); display: flex; flex-direction: column; gap: var(--s-4); }
   .context-strip-label { font-size: 12px; line-height: 16px; color: var(--wiom-text-sec); }
   .context-strip-value { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--wiom-text-default); }
@@ -366,15 +268,14 @@
   .btn-primary:hover { background: var(--wiom-bg-brand-hover); }
   .btn-primary:active { transform: scale(0.99); }
 
-  /* ===== Yellow context screen ===== */
+  /* Yellow screens (context + scenario) */
   .yellow-screen { background: #FFD888; position: absolute; inset: 0; display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: none; }
   .yellow-screen::-webkit-scrollbar { display: none; }
 
   .context-content { padding: 32px 24px 0; display: flex; flex-direction: column; gap: 20px; flex: 1; }
   .context-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
   .context-user-info { display: flex; flex-direction: column; gap: 4px; flex: 1; }
-  .context-avatar { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; flex: 0 0 auto; box-shadow: 0 2px 8px rgba(0,0,0,0.15); background: #D9008D; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 36px; font-weight: 700; }
-  .context-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .context-avatar { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; flex: 0 0 auto; box-shadow: 0 2px 8px rgba(0,0,0,0.15); background: #D9008D; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 40px; font-weight: 700; }
   .context-q { font-weight: 800; font-size: 14px; line-height: 20px; color: #565656; }
   .context-a { font-weight: 500; font-size: 14px; line-height: 20px; color: #D92B90; }
   .context-block { display: flex; flex-direction: column; gap: 4px; }
@@ -384,41 +285,29 @@
   .btn-yellow-cta { background: #444444; color: #FFD888; border: none; border-radius: 16px; padding: 14px 32px; font-size: 16px; font-weight: 600; line-height: 24px; width: 100%; box-shadow: 0 2px 6px rgba(0,0,0,0.17); cursor: pointer; }
   .btn-yellow-cta:active { transform: scale(0.98); }
 
-  /* ===== Hotspot hint ===== */
+  /* Scenario chooser */
+  .scenario-content { padding: 32px 20px 0; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+  .scenario-title { font-size: 22px; font-weight: 700; line-height: 30px; color: #161021; text-align: center; }
+  .scenario-subtitle { font-size: 13px; font-weight: 400; line-height: 18px; color: #565656; text-align: center; margin-top: -8px; }
+  .scenario-group-label { font-size: 11px; font-weight: 700; color: #565656; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 8px; padding: 0 4px; }
+  .scenario-card { background: #FFFFFF; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); cursor: pointer; border: 2px solid transparent; transition: transform 120ms; }
+  .scenario-card:hover { transform: translateY(-2px); }
+  .scenario-card-num { font-size: 11px; font-weight: 700; color: #D92B90; text-transform: uppercase; letter-spacing: 0.04em; }
+  .scenario-card-title { font-size: 15px; font-weight: 700; color: #161021; line-height: 22px; }
+  .scenario-card-desc { font-size: 13px; font-weight: 400; color: #565656; line-height: 18px; margin-top: 2px; }
+  .scenario-card.edge .scenario-card-num { color: #B45200; }
+
+  /* Hotspot hint */
   .hint-pulse { position: relative; }
   .hint-pulse::before { content: ""; position: absolute; inset: 0; background: rgba(59, 130, 246, 0.35); border-radius: inherit; pointer-events: none; z-index: 10; animation: hintFade 0.9s ease-out 2; opacity: 0; }
   @keyframes hintFade { 0%, 100% { opacity: 0; } 25%, 60% { opacity: 1; } }
 
-  /* ===== Toast ===== */
-  .toast {
-    position: absolute;
-    bottom: 120px;
-    left: 50%;
-    transform: translateX(-50%) translateY(8px);
-    background: rgba(22, 16, 33, 0.92);
-    color: #FFFFFF;
-    padding: 12px 20px;
-    border-radius: var(--r-full);
-    font-size: 14px; font-weight: 400; line-height: 20px;
-    text-align: center;
-    z-index: 9999;
-    opacity: 0; pointer-events: none;
-    transition: opacity 220ms ease-out, transform 220ms ease-out;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    white-space: nowrap; max-width: calc(100% - 48px);
-  }
+  /* Toast */
+  .toast { position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%) translateY(8px); background: rgba(22, 16, 33, 0.92); color: #FFFFFF; padding: 12px 20px; border-radius: var(--r-full); font-size: 14px; font-weight: 400; line-height: 20px; text-align: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 220ms ease-out, transform 220ms ease-out; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); white-space: nowrap; max-width: calc(100% - 48px); }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ===== Reset FAB ===== */
-  .reset-fab {
-    position: fixed; bottom: 16px; right: 16px; z-index: 1000;
-    background: #161021; color: #FAF9FC; border: none;
-    border-radius: var(--r-full);
-    padding: var(--s-8) var(--s-16);
-    font-size: 12px; font-weight: 600;
-    display: inline-flex; align-items: center; gap: var(--s-8);
-    box-shadow: var(--sh-md); opacity: 0.85;
-  }
+  /* Reset FAB */
+  .reset-fab { position: fixed; bottom: 16px; right: 16px; z-index: 1000; background: #161021; color: #FAF9FC; border: none; border-radius: var(--r-full); padding: var(--s-8) var(--s-16); font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: var(--s-8); box-shadow: var(--sh-md); opacity: 0.85; }
   .reset-fab:hover { opacity: 1; }
   .reset-fab .material-icons { font-size: 18px; }
   @media (min-width: 768px) { .reset-fab { bottom: 32px; right: 32px; } }
@@ -444,37 +333,81 @@
           </div>
 
           <div class="context-block">
-            <div class="context-q">वर्मा जी इस स्क्रीन पर क्यों आए?</div>
-            <div class="context-a">वर्मा जी ने अभी-अभी व्योम ऐप पर ₹100 का पेमेंट किया, SSID चुना और पता-लोकेशन भर दी। अब उन्हें नेट सेटअप का दिन और समय तय करना है।</div>
+            <div class="context-q">यह प्रोटोटाइप क्या दिखाता है?</div>
+            <div class="context-a">नेट सेटअप का दिन और समय कैसे तय हो — दोनों <strong>नया सेटअप</strong> शुरू करते समय और बाद में <strong>दिन बदलते</strong> समय।</div>
           </div>
 
           <div class="context-block">
-            <div class="context-q">व्योम क्या कर रहा है?</div>
-            <div class="context-a">पार्टनर की उपलब्धता देख कर व्योम ने वर्मा जी को <strong>दो दिन-समय के विकल्प</strong> भेजे हैं। वर्मा जी इनमें से कोई एक चुन सकते हैं, या फिर अपने हिसाब से कोई और दिन भी चुन सकते हैं।</div>
+            <div class="context-q">मुख्य नियम</div>
+            <div class="context-a">जब व्योम (CSP ऐप से) दिन सुझाए → <strong>दो विकल्प</strong> दिए जाएं ताकि वर्मा जी झट से चुन सकें। जब वर्मा जी खुद दिन चुनना चाहें → कैलेंडर खोलें, एक दिन और एक समय चुनें।</div>
           </div>
 
           <div class="context-block">
-            <div class="context-q">इस स्टेप के बाद वर्मा जी क्या करेंगे?</div>
-            <div class="context-a">वर्मा जी एक विकल्प चुन लेंगे। चैट में ही दिन और समय पक्का हो जाएगा, और व्योम के इंजीनियर उसी दिन सेटअप करने आ जाएंगे।</div>
-          </div>
-
-          <div class="context-block">
-            <div class="context-q">वर्मा जी को कैसा महसूस होगा अगर यह दुनिया का सबसे बेहतरीन डिज़ाइन हो?</div>
-            <div class="context-a">वर्मा जी को सोचना नहीं पड़ेगा, न कैलेंडर खोलना पड़ेगा। दो आसान विकल्प देख कर वो तुरंत चुन लेंगे — जैसे कोई अपना उन्हें समझ कर सुझाव दे रहा हो।</div>
+            <div class="context-q">अगले स्क्रीन पर क्या है?</div>
+            <div class="context-a">पाँच केस — एक नया सेटअप, तीन रिशेड्यूल केस, और एक एज केस। हर केस में चैट + पिकर + कन्फर्मेशन का पूरा फ्लो है।</div>
           </div>
 
         </div>
 
         <div class="context-cta-wrap">
-          <button class="btn-yellow-cta" id="contextNextBtn">Take me to the chat</button>
+          <button class="btn-yellow-cta" id="contextNextBtn">Take me to the scenarios</button>
         </div>
+      </div>
+    </section>
+
+    <!-- ============ SCENARIO CHOOSER ============ -->
+    <section class="screen" id="scenarioScreen">
+      <div class="yellow-screen">
+        <div class="scenario-content">
+
+          <div class="scenario-title">Pick a scenario</div>
+          <div class="scenario-subtitle">All five cases below, each with full chat → picker → confirmation</div>
+
+          <div class="scenario-group-label">नया सेटअप — व्योम 2 विकल्प भेजता है</div>
+
+          <div class="scenario-card" id="scenarioScheduleCard">
+            <div class="scenario-card-num">Schedule</div>
+            <div class="scenario-card-title">नया सेटअप — पहली बार दिन तय करना है</div>
+            <div class="scenario-card-desc">वर्मा जी ने अभी पेमेंट किया है। व्योम ने दो दिन-समय के विकल्प भेजे हैं।</div>
+          </div>
+
+          <div class="scenario-group-label">रिशेड्यूल — पहले से तय/प्रस्तावित बुकिंग बदलनी है</div>
+
+          <div class="scenario-card" id="scenarioCase1Card">
+            <div class="scenario-card-num">Case 1</div>
+            <div class="scenario-card-title">दिन कन्फर्म है</div>
+            <div class="scenario-card-desc">सेटअप का दिन तय हो चुका है। अब वर्मा जी उसे बदलना चाहते हैं।</div>
+          </div>
+
+          <div class="scenario-card" id="scenarioCase2Card">
+            <div class="scenario-card-num">Case 2</div>
+            <div class="scenario-card-title">दिन प्रस्तावित है, कन्फर्म नहीं</div>
+            <div class="scenario-card-desc">व्योम ने <strong>दो विकल्प</strong> सुझाए हैं, पर वर्मा जी ने अभी चुना नहीं।</div>
+          </div>
+
+          <div class="scenario-card" id="scenarioCase3Card">
+            <div class="scenario-card-num">Case 3</div>
+            <div class="scenario-card-title">इंजीनियर तय हो चुका है</div>
+            <div class="scenario-card-desc">दिन और इंजीनियर दोनों तय हैं। अब वर्मा जी दिन बदलना चाहते हैं।</div>
+          </div>
+
+          <div class="scenario-group-label">एज केस</div>
+
+          <div class="scenario-card edge" id="scenarioEdgeCard">
+            <div class="scenario-card-num">Edge case</div>
+            <div class="scenario-card-title">दोनों विकल्प बुक हो गए</div>
+            <div class="scenario-card-desc">व्योम ने 2 स्लॉट सुझाए, पर वर्मा जी के चुनने से पहले दोनों भर गए। अब सिर्फ़ कैलेंडर खुलेगा।</div>
+          </div>
+
+        </div>
+
+        <div class="context-cta-wrap"></div>
       </div>
     </section>
 
     <!-- ============ CHAT SCREEN ============ -->
     <section class="screen" id="chatScreen">
 
-      <!-- Phone status bar -->
       <div class="status-bar">
         <span>04:35 PM</span>
         <div class="status-bar-icons">
@@ -485,7 +418,6 @@
         </div>
       </div>
 
-      <!-- Chat top app bar -->
       <header class="chat-top-bar">
         <div class="chat-top-bar-left">
           <div class="wiom-avatar">
@@ -506,31 +438,64 @@
         </div>
       </header>
 
-      <!-- Sticky net card -->
       <div class="sticky-net">
         <div class="net-card">
-          <div class="net-card-icon">
-            <span class="material-icons" style="color: #A7A1B2;">home</span>
-          </div>
+          <div class="net-card-icon"><span class="material-icons" style="color: #A7A1B2;">home</span></div>
           <div class="net-card-text">
             <div class="net-card-heading">घर का नेट: वर्मा जी</div>
             <div class="net-card-status">
               <span class="net-card-status-label">स्थिति:</span>
-              <span class="net-card-status-value">तारीख तय करनी है</span>
+              <span class="net-card-status-value" id="netCardStatus">सेटअप बाकी है</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Chat body -->
-      <div class="chat-body" id="chatBody">
-        <!-- Populated by JS -->
-      </div>
+      <div class="chat-body" id="chatBody"></div>
 
-      <!-- Chat input -->
       <div class="chat-input">
         <div class="input-field placeholder" id="inputField">यहाँ पूछें....</div>
         <button class="send-btn" id="sendBtn" aria-label="Send" disabled><span class="material-icons">send</span></button>
+      </div>
+
+      <div class="keyboard" id="keyboard">
+        <div class="kb-suggestions">
+          <div class="kb-sg-icon"><span class="material-icons">arrow_back_ios</span></div>
+          <div class="kb-sg-icon"><span class="material-icons">gif</span></div>
+          <div class="kb-sg-icon"><span class="material-icons">settings</span></div>
+          <div class="kb-sg-icon"><span class="material-icons">translate</span></div>
+          <div class="kb-sg-icon"><span class="material-icons">emoji_emotions</span></div>
+          <div class="kb-sg-icon"><span class="material-icons">more_horiz</span></div>
+          <div class="kb-sg-icon"><span class="material-icons">mic</span></div>
+        </div>
+        <div class="kb-rows">
+          <div class="kb-row">
+            <div class="kb-key">q</div><div class="kb-key">w</div><div class="kb-key">e</div>
+            <div class="kb-key">r</div><div class="kb-key">t</div><div class="kb-key">y</div>
+            <div class="kb-key">u</div><div class="kb-key">i</div><div class="kb-key">o</div>
+            <div class="kb-key">p</div>
+          </div>
+          <div class="kb-row" style="padding: 0 18px;">
+            <div class="kb-key">a</div><div class="kb-key">s</div><div class="kb-key">d</div>
+            <div class="kb-key">f</div><div class="kb-key">g</div><div class="kb-key">h</div>
+            <div class="kb-key">j</div><div class="kb-key">k</div><div class="kb-key">l</div>
+          </div>
+          <div class="kb-row">
+            <div class="kb-key wide modifier"><span class="material-icons">arrow_upward</span></div>
+            <div class="kb-key">z</div><div class="kb-key">x</div><div class="kb-key">c</div>
+            <div class="kb-key">v</div><div class="kb-key">b</div><div class="kb-key">n</div>
+            <div class="kb-key">m</div>
+            <div class="kb-key wide modifier"><span class="material-icons">backspace</span></div>
+          </div>
+          <div class="kb-row">
+            <div class="kb-key wide modifier" style="font-size: 12px;">?123</div>
+            <div class="kb-key modifier" style="font-size: 12px;">,</div>
+            <div class="kb-key modifier"><span class="material-icons">language</span></div>
+            <div class="kb-key space"></div>
+            <div class="kb-key modifier" style="font-size: 12px;">.</div>
+            <div class="kb-key wide modifier"><span class="material-icons">keyboard_return</span></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -553,46 +518,11 @@
       </header>
 
       <div class="picker-body">
-        <div class="context-strip">
-          <div class="context-strip-label">व्योम ने सुझाया था</div>
-          <div class="context-strip-value">12 मई, मंगलवार · दोपहर 2 से 5 बजे</div>
-          <div class="context-strip-time">या 13 मई, बुधवार · सुबह 11 से दोपहर 2 बजे</div>
-        </div>
+        <div class="context-strip" id="contextStrip"></div>
 
         <div class="section-block">
           <div class="section-title">मई, 2026</div>
-          <div class="date-row" id="dateRow">
-            <div class="date-card" data-date="11 मई" data-day="सोमवार">
-              <div class="date-day">सोम</div><div class="date-num">11</div>
-            </div>
-            <div class="date-card current" data-date="12 मई" data-day="मंगलवार">
-              <div class="date-day">मंगल</div><div class="date-num">12</div>
-            </div>
-            <div class="date-card current" data-date="13 मई" data-day="बुधवार">
-              <div class="date-day">बुध</div><div class="date-num">13</div>
-            </div>
-            <div class="date-card" data-date="14 मई" data-day="गुरुवार">
-              <div class="date-day">गुरु</div><div class="date-num">14</div>
-            </div>
-            <div class="date-card" data-date="15 मई" data-day="शुक्रवार">
-              <div class="date-day">शुक्र</div><div class="date-num">15</div>
-            </div>
-            <div class="date-card disabled" data-date="16 मई" data-day="शनिवार">
-              <div class="date-day">शनि</div><div class="date-num">16</div>
-            </div>
-            <div class="date-card" data-date="17 मई" data-day="रविवार">
-              <div class="date-day">रवि</div><div class="date-num">17</div>
-            </div>
-            <div class="date-card" data-date="18 मई" data-day="सोमवार">
-              <div class="date-day">सोम</div><div class="date-num">18</div>
-            </div>
-            <div class="date-card" data-date="19 मई" data-day="मंगलवार">
-              <div class="date-day">मंगल</div><div class="date-num">19</div>
-            </div>
-            <div class="date-card" data-date="20 मई" data-day="बुधवार">
-              <div class="date-day">बुध</div><div class="date-num">20</div>
-            </div>
-          </div>
+          <div class="date-row" id="dateRow"></div>
         </div>
 
         <div class="section-block time-section" id="timeSection">
@@ -635,7 +565,6 @@
     </section>
 
     <div class="toast" id="toast"></div>
-
   </div>
 </div>
 
@@ -645,47 +574,61 @@
 </button>
 
 <script>
-  // ===== State =====
+  // ============================================================================
+  // STATE
+  // ============================================================================
   const state = {
+    case: null,                  // 'schedule' | 'case1' | 'case2' | 'case3' | 'edge'
+    committed: false,            // true once user has finalized a slot (via CTA or picker)
+    intentSent: false,           // true once user has typed and sent reschedule intent
     selectedDate: null,
     selectedDay: null,
     selectedSlot: null,
-    committed: false,
+    keyboardOpen: false,
+    typed: false,
+    activeCta: null,             // tracks the CTA that triggered the picker (for muting logic)
   };
 
-  // ===== Two proposed slots from Wiom (the core of the schedule flow) =====
+  // The two slots WIOM (CSP) proposes — central to Schedule + Case 2 + Edge cases.
   const PROPOSED_SLOTS = [
-    { id: 'A', date: '12 मई',  day: 'मंगलवार', label: 'दोपहर 2 से 5 बजे',         shortLabel: 'दोपहर 2-5 बजे',  ctaLabel: '12 मई, दोपहर 2-5 बजे ठीक है' },
-    { id: 'B', date: '13 मई',  day: 'बुधवार',  label: 'सुबह 11 से दोपहर 2 बजे',   shortLabel: 'सुबह 11-2 बजे',  ctaLabel: '13 मई, सुबह 11-2 बजे ठीक है' },
+    { id: 'A', date: '12 मई',  day: 'मंगलवार', periodLabel: 'दोपहर',         time: 'दोपहर 2 से 5 बजे',       ctaShort: '12 मई, दोपहर ठीक है' },
+    { id: 'B', date: '13 मई',  day: 'बुधवार',  periodLabel: 'सुबह',          time: 'सुबह 11 से 2 बजे',       ctaShort: '13 मई, सुबह ठीक है'   },
   ];
 
-  // ===== DOM refs =====
-  const contextScreen  = document.getElementById('contextScreen');
-  const chatScreen     = document.getElementById('chatScreen');
-  const pickerScreen   = document.getElementById('pickerScreen');
-  const chatBody       = document.getElementById('chatBody');
-  const sendBtn        = document.getElementById('sendBtn');
-  const inputField     = document.getElementById('inputField');
-  const pickerBack     = document.getElementById('pickerBack');
-  const dateRow        = document.getElementById('dateRow');
-  const slotGrid       = document.getElementById('slotGrid');
-  const pickerFooter   = document.getElementById('pickerFooter');
-  const confirmBtn     = document.getElementById('confirmBtn');
-  const resetBtn       = document.getElementById('resetBtn');
-  const contextNextBtn = document.getElementById('contextNextBtn');
-  const device         = document.querySelector('.device');
-  const timeSection    = document.getElementById('timeSection');
-  const toastEl        = document.getElementById('toast');
+  // ============================================================================
+  // DOM REFS
+  // ============================================================================
+  const contextScreen   = document.getElementById('contextScreen');
+  const scenarioScreen  = document.getElementById('scenarioScreen');
+  const chatScreen      = document.getElementById('chatScreen');
+  const pickerScreen    = document.getElementById('pickerScreen');
+  const chatBody        = document.getElementById('chatBody');
+  const sendBtn         = document.getElementById('sendBtn');
+  const inputField      = document.getElementById('inputField');
+  const keyboard        = document.getElementById('keyboard');
+  const pickerBack      = document.getElementById('pickerBack');
+  const dateRow         = document.getElementById('dateRow');
+  const slotGrid        = document.getElementById('slotGrid');
+  const pickerFooter    = document.getElementById('pickerFooter');
+  const confirmBtn      = document.getElementById('confirmBtn');
+  const resetBtn        = document.getElementById('resetBtn');
+  const contextNextBtn  = document.getElementById('contextNextBtn');
+  const contextStrip    = document.getElementById('contextStrip');
+  const timeSection     = document.getElementById('timeSection');
+  const toastEl         = document.getElementById('toast');
+  const netCardStatus   = document.getElementById('netCardStatus');
+  const device          = document.querySelector('.device');
 
-  // ===== Helpers =====
+  // ============================================================================
+  // TOAST + CHAT HELPERS
+  // ============================================================================
   let toastHideTimer = null;
-  function showToast(message) {
-    toastEl.textContent = message;
+  function showToast(msg) {
+    toastEl.textContent = msg;
     toastEl.classList.add('show');
     if (toastHideTimer) clearTimeout(toastHideTimer);
     toastHideTimer = setTimeout(() => toastEl.classList.remove('show'), 2500);
   }
-
   function scrollChatToBottom() {
     requestAnimationFrame(() => { chatBody.scrollTop = chatBody.scrollHeight; });
   }
@@ -705,7 +648,6 @@
       </div>`;
     return row;
   }
-
   function botBubble(htmlBlocks, time, followUp) {
     const row = document.createElement('div');
     row.className = 'msg-row bot' + (followUp ? ' follow-up' : '');
@@ -722,7 +664,6 @@
       </div>`;
     return row;
   }
-
   function userReplyWithQuote(quotedText, replyText, time) {
     const row = document.createElement('div');
     row.className = 'msg-row user';
@@ -745,7 +686,40 @@
       </div>`;
     return row;
   }
-
+  function botBubbleWithCTA(htmlBlocks, time, ctaLabel, onClick) {
+    const row = document.createElement('div');
+    row.className = 'msg-row bot';
+    const content = htmlBlocks.map(t => `<div class="msg-text">${t}</div>`).join('');
+    row.innerHTML = `
+      <div class="msg-wrap">
+        <div class="msg-tail"></div>
+        <div class="msg-bubble has-cta-below">
+          <div class="msg-content">
+            ${content}
+            <div class="msg-time">${time}</div>
+          </div>
+        </div>
+        <div class="msg-divider"></div>
+        <button class="msg-cta">
+          <span class="msg-cta-text">${ctaLabel}</span>
+        </button>
+      </div>`;
+    row.querySelector('.msg-cta').addEventListener('click', onClick);
+    return row;
+  }
+  function engineerCardBubble(name) {
+    const row = document.createElement('div');
+    row.className = 'msg-row bot follow-up';
+    row.innerHTML = `
+      <div class="msg-wrap">
+        <div class="engineer-card">
+          <div class="engineer-card-avatar"><span class="material-icons">person</span></div>
+          <div class="engineer-card-name">${name}</div>
+          <button class="engineer-card-call" type="button" aria-label="Call ${name}"><span class="material-icons">call</span></button>
+        </div>
+      </div>`;
+    return row;
+  }
   function waitingBubble() {
     const row = document.createElement('div');
     row.className = 'msg-row bot';
@@ -763,145 +737,459 @@
       </div>`;
     return row;
   }
-
-  // ===== Screen navigation =====
-  function showChat() {
-    contextScreen.classList.remove('active');
-    contextScreen.classList.add('left');
-    pickerScreen.classList.remove('active');
-    chatScreen.classList.remove('left');
-    chatScreen.classList.add('active');
-  }
-  function showPicker() {
-    chatScreen.classList.remove('active');
-    chatScreen.classList.add('left');
-    pickerScreen.classList.add('active');
-  }
-  function startChat() {
-    showChat();
-    setupInitialChat();
-    chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'instant' });
-  }
-
-  // ===== Initial chat: bot proposes 2 slots with 3 CTAs =====
-  function setupInitialChat() {
-    chatBody.innerHTML = '';
-
-    // Designer note: prior chat exists (payment, SSID, address)
-    const prevCard = document.createElement('div');
-    prevCard.className = 'prev-chat-card';
-    prevCard.innerHTML = `
+  function prevChatCard(text) {
+    const card = document.createElement('div');
+    card.className = 'prev-chat-card';
+    card.innerHTML = `
       <div class="prev-chat-card-note">This is not part of design</div>
-      <div class="prev-chat-card-text">पेमेंट, SSID और पता भरने वाली पुरानी चैट यहाँ रहेगी</div>
-    `;
-    chatBody.appendChild(prevCard);
+      <div class="prev-chat-card-text">${text}</div>`;
+    return card;
+  }
 
-    // Bot bubble with TWO proposed slots + THREE CTAs.
-    // CTA layout: [slot A] [middle] [slot B] [middle] [koi anya din] (rounded bottom)
-    const [slotA, slotB] = PROPOSED_SLOTS;
-    const proposalRow = document.createElement('div');
-    proposalRow.className = 'msg-row bot';
-    proposalRow.innerHTML = `
+  // Two-slot proposal bubble (Schedule + Case 2). Slots passed as PROPOSED_SLOTS entries.
+  // If `slotsUnavailable` is true (Edge case), pills render struck-through and only the
+  // "कोई अन्य दिन चुनें" CTA is wired up.
+  function twoSlotProposalBubble(intro, slots, options) {
+    const opts = options || {};
+    const slotsUnavailable = !!opts.slotsUnavailable;
+    const closingLine = opts.closingLine || (slotsUnavailable
+      ? 'कृपया कोई और दिन चुनें।'
+      : 'बताइए कौन-सा ठीक रहेगा?');
+
+    const row = document.createElement('div');
+    row.className = 'msg-row bot';
+
+    const pillsHtml = slots.map(s => `
+      <div class="msg-slot-pill${slotsUnavailable ? ' unavailable' : ''}">
+        <div class="msg-slot-pill-date">${s.date}<span class="msg-slot-pill-day">, ${s.day}</span></div>
+        <div class="msg-slot-pill-time">${s.time}</div>
+      </div>
+    `).join('');
+
+    let ctasHtml = '';
+    if (!slotsUnavailable) {
+      slots.forEach((s, i) => {
+        ctasHtml += `<div class="msg-divider"></div>
+          <button class="msg-cta middle" type="button" data-action="pick-${s.id}">
+            <span class="msg-cta-text">${s.ctaShort}</span>
+          </button>`;
+      });
+    }
+    // Final CTA — always picker fallback
+    ctasHtml += `<div class="msg-divider"></div>
+      <button class="msg-cta" type="button" data-action="change">
+        <span class="msg-cta-text">कोई अन्य दिन चुनें</span>
+      </button>`;
+
+    row.innerHTML = `
       <div class="msg-wrap">
         <div class="msg-tail"></div>
         <div class="msg-bubble has-cta-below">
           <div class="msg-content">
-            <div class="msg-text">आपका नेट <strong>${slotA.date} ${slotA.label}</strong> के बीच लग सकता है,</div>
-            <div class="msg-text">या <strong>${slotB.date} ${slotB.label}</strong> के बीच।</div>
-            <div class="msg-text">&nbsp;</div>
-            <div class="msg-text">कौन-सा समय आपको ठीक लगेगा?</div>
+            <div class="msg-text">${intro}</div>
+            ${pillsHtml}
+            <div class="msg-text">${closingLine}</div>
             <div class="msg-time">10:15 AM</div>
           </div>
         </div>
-        <div class="msg-divider"></div>
-        <button class="msg-cta middle" type="button" data-action="pick-a">
-          <span class="msg-cta-text">${slotA.ctaLabel}</span>
-        </button>
-        <div class="msg-divider"></div>
-        <button class="msg-cta middle" type="button" data-action="pick-b">
-          <span class="msg-cta-text">${slotB.ctaLabel}</span>
-        </button>
-        <div class="msg-divider"></div>
-        <button class="msg-cta" type="button" data-action="change">
-          <span class="msg-cta-text">कोई अन्य दिन चुनें</span>
-        </button>
+        ${ctasHtml}
       </div>`;
-    chatBody.appendChild(proposalRow);
-
-    proposalRow.querySelector('[data-action="pick-a"]').addEventListener('click', () => commitSlot(slotA));
-    proposalRow.querySelector('[data-action="pick-b"]').addEventListener('click', () => commitSlot(slotB));
-    proposalRow.querySelector('[data-action="change"]').addEventListener('click', () => {
-      // Quoted user reply showing they chose the picker path
-      muteAllCtas();
-      chatBody.appendChild(userReplyWithQuote(
-        `आपका नेट ${slotA.date} ${slotA.shortLabel} के बीच लग सकता है…`,
-        'कोई अन्य दिन चुनें',
-        '10:16 AM'
-      ));
-      scrollChatToBottom();
-      setTimeout(showPicker, 320);
-    });
+    return row;
   }
 
   function muteAllCtas() {
     chatBody.querySelectorAll('.msg-row.bot .msg-cta').forEach(c => c.classList.add('muted'));
   }
 
-  // ===== User picks one of the two proposed slots =====
-  function commitSlot(slot) {
+  // ============================================================================
+  // SCREEN NAVIGATION
+  // ============================================================================
+  function showScenario() {
+    contextScreen.classList.remove('active');
+    contextScreen.classList.add('left');
+    scenarioScreen.classList.add('active');
+  }
+  function startChat() {
+    scenarioScreen.classList.remove('active');
+    scenarioScreen.classList.add('left');
+    chatScreen.classList.add('active');
+
+    if (state.case === 'schedule') setupScheduleChat();
+    else if (state.case === 'case1') setupCase1Chat();
+    else if (state.case === 'case2') setupCase2Chat();
+    else if (state.case === 'case3') setupCase3Chat();
+    else if (state.case === 'edge')  setupEdgeChat();
+
+    chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'instant' });
+  }
+  function showPicker() {
+    chatScreen.classList.remove('active');
+    chatScreen.classList.add('left');
+    pickerScreen.classList.add('active');
+    populatePicker();
+  }
+  function showChatFromPicker() {
+    pickerScreen.classList.remove('active');
+    chatScreen.classList.remove('left');
+    chatScreen.classList.add('active');
+  }
+
+  // ============================================================================
+  // CHAT SETUP — PER CASE
+  // ============================================================================
+
+  // --- SCHEDULE (new install): WIOM proposed 2 slots, user has not picked yet ---
+  function setupScheduleChat() {
+    chatBody.innerHTML = '';
+    netCardStatus.textContent = 'तारीख तय करनी है';
+
+    chatBody.appendChild(prevChatCard('पेमेंट, SSID और पता भरने वाली पुरानी चैट यहाँ रहेगी'));
+
+    const bubble = twoSlotProposalBubble(
+      'आपका नेट इनमें से किसी एक समय पर लग सकता है —',
+      PROPOSED_SLOTS,
+      {}
+    );
+    chatBody.appendChild(bubble);
+    wireTwoSlotCtas(bubble);
+  }
+
+  // --- CASE 1: date is confirmed, user must type intent to reschedule ---
+  function setupCase1Chat() {
+    chatBody.innerHTML = '';
+    netCardStatus.textContent = 'सेटअप बाकी है';
+    chatBody.appendChild(prevChatCard('keep the previous chat history as is'));
+
+    chatBody.appendChild(botBubble(
+      ['नेट सेटअप का दिन तय हो गया है।', '&nbsp;', 'नेट <strong>5 मई</strong>, <strong>10 से 1 बजे के बीच</strong> लगेगा।'],
+      '10:15 AM'
+    ));
+    chatBody.appendChild(botBubble(['अब आप आराम करें'], '10:15 AM', true));
+  }
+
+  // --- CASE 2: WIOM proposed 2 slots, user has NOT confirmed yet ---
+  function setupCase2Chat() {
+    chatBody.innerHTML = '';
+    netCardStatus.textContent = 'दिन कन्फर्म करना है';
+    chatBody.appendChild(prevChatCard('keep the previous chat history as is'));
+
+    const bubble = twoSlotProposalBubble(
+      'क्या इनमें से कोई एक समय आपको ठीक लगेगा?',
+      PROPOSED_SLOTS,
+      {}
+    );
+    chatBody.appendChild(bubble);
+    wireTwoSlotCtas(bubble);
+  }
+
+  // --- CASE 3: engineer already assigned for the confirmed setup day ---
+  function setupCase3Chat() {
+    chatBody.innerHTML = '';
+    netCardStatus.textContent = 'सेटअप बाकी है';
+    chatBody.appendChild(prevChatCard('keep the previous chat history as is'));
+
+    chatBody.appendChild(botBubble(['नेट सेटअप के लिए इंजीनियर तय हो गया है'], '10:15 AM'));
+    chatBody.appendChild(botBubble(
+      ['<strong>5 मई</strong> को रोहित कुमार आपके घर पर नेट लगाने के लिए आ जाएंगे'],
+      '10:15 AM', true
+    ));
+    chatBody.appendChild(engineerCardBubble('रोहित कुमार'));
+  }
+
+  // --- EDGE: WIOM proposed 2 slots, but both got booked before user picked ---
+  function setupEdgeChat() {
+    chatBody.innerHTML = '';
+    netCardStatus.textContent = 'दिन कन्फर्म करना है';
+    chatBody.appendChild(prevChatCard('keep the previous chat history as is'));
+
+    // First, the original proposal as it appeared (now stale — pills struck through)
+    const stale = twoSlotProposalBubble(
+      'क्या इनमें से कोई एक समय आपको ठीक लगेगा?',
+      PROPOSED_SLOTS,
+      { slotsUnavailable: true, closingLine: 'दोनों समय अब भर गए हैं।' }
+    );
+    chatBody.appendChild(stale);
+    // Mute the stale "कोई अन्य दिन चुनें" CTA — a fresh one comes below
+    stale.querySelectorAll('.msg-cta').forEach(c => c.classList.add('muted'));
+
+    // Wiom's apology + fresh CTA to open the picker
+    const apology = botBubbleWithCTA(
+      [
+        'क्षमा करें — आपके चुनने से पहले दोनों समय भर गए।',
+        '&nbsp;',
+        'नीचे दिए गए बटन से कोई और दिन चुनें।'
+      ],
+      '10:18 AM',
+      'दिन और समय चुनें',
+      () => {
+        state.activeCta = apology.querySelector('.msg-cta');
+        showPicker();
+      }
+    );
+    chatBody.appendChild(apology);
+  }
+
+  // ============================================================================
+  // 2-SLOT CTA WIRING (shared by Schedule + Case 2)
+  // ============================================================================
+  function wireTwoSlotCtas(bubble) {
+    PROPOSED_SLOTS.forEach(slot => {
+      const btn = bubble.querySelector(`[data-action="pick-${slot.id}"]`);
+      if (btn) btn.addEventListener('click', () => commitProposedSlot(slot, bubble));
+    });
+    const changeBtn = bubble.querySelector('[data-action="change"]');
+    changeBtn.addEventListener('click', () => {
+      state.activeCta = changeBtn;
+      showPicker();
+    });
+  }
+
+  // User tapped one of the two proposed slot CTAs.
+  function commitProposedSlot(slot, bubble) {
     if (state.committed) return;
     state.committed = true;
     muteAllCtas();
 
-    // 1. User reply bubble (quotes the bot's proposal question, replies with CTA label)
+    // 1. User reply quoting the proposal question
     setTimeout(() => {
-      chatBody.appendChild(userReplyWithQuote(
-        'कौन-सा समय आपको ठीक लगेगा?',
-        slot.ctaLabel,
-        '10:16 AM'
-      ));
+      const quoted = bubble.querySelector('.msg-content .msg-text:last-of-type').textContent;
+      chatBody.appendChild(userReplyWithQuote(quoted, slot.ctaShort, '10:16 AM'));
       scrollChatToBottom();
     }, 200);
 
-    // 2. Wiom typing
+    // 2. Typing indicator
     setTimeout(() => {
       chatBody.appendChild(waitingBubble());
       scrollChatToBottom();
     }, 900);
 
-    // 3. Confirmation bubble + follow-up
+    // 3. Confirmation
     setTimeout(() => {
-      const waiting = document.getElementById('waitingBubble');
-      if (waiting) waiting.remove();
-
+      const w = document.getElementById('waitingBubble');
+      if (w) w.remove();
       chatBody.appendChild(botBubble([
         'तारीख पक्की हो गई।',
         '&nbsp;',
-        `नेट <strong>${slot.date}</strong>, <strong>${slot.label} के बीच</strong> लगेगा।`
+        `नेट <strong>${slot.date}</strong>, <strong>${slot.time} के बीच</strong> लगेगा।`
       ], '10:16 AM'));
-
       chatBody.appendChild(botBubble(['अब आप आराम करें'], '10:16 AM', true));
       scrollChatToBottom();
     }, 2400);
 
-    // 4. End-of-flow marker
+    appendEndOfFlowCard(4400);
+  }
+
+  function appendEndOfFlowCard(delay) {
     setTimeout(() => {
       const endCard = document.createElement('div');
       endCard.className = 'prev-chat-card restart';
+      const endText = state.case === 'case3'
+        ? 'Partner will update new slot to the assigned engineer → Rest of the flow will be same as of today'
+        : 'Partner will receive the chosen slot and assign the engineer → Rest of the flow will be same as of today';
       endCard.innerHTML = `
         <div class="prev-chat-card-note">This is not part of design · Tap to restart</div>
-        <div class="prev-chat-card-text">Partner will receive the chosen slot and assign the engineer → Rest of the flow will be same as of today</div>
-      `;
+        <div class="prev-chat-card-text">${endText}</div>`;
       endCard.addEventListener('click', () => location.reload());
       chatBody.appendChild(endCard);
       scrollChatToBottom();
-    }, 4400);
+    }, delay);
   }
 
-  // ===== Picker (fallback path) =====
+  // ============================================================================
+  // KEYBOARD + TYPED INTENT (Case 1 and Case 3 only — user-initiated reschedule)
+  // ============================================================================
+  function openKeyboard() {
+    if (state.keyboardOpen) return;
+    state.keyboardOpen = true;
+    keyboard.classList.add('open');
+
+    const intentText = 'नेट लगवाने का दिन बदलना है';
+    inputField.classList.remove('placeholder');
+    inputField.innerHTML = `${intentText}<span class="caret"></span>`;
+    state.typed = true;
+    sendBtn.disabled = false;
+
+    const startTime = performance.now();
+    function tick(now) {
+      chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'instant' });
+      if (now - startTime < 280) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  function closeKeyboard() {
+    state.keyboardOpen = false;
+    keyboard.classList.remove('open');
+  }
+
+  function sendIntent() {
+    if (state.intentSent || !state.typed) return;
+    state.intentSent = true;
+
+    const userMsg = 'नेट लगवाने का दिन बदलना है';
+    chatBody.appendChild(userBubble(userMsg, '10:42 AM'));
+
+    inputField.innerHTML = 'यहाँ पूछें....';
+    inputField.classList.add('placeholder');
+    sendBtn.disabled = true;
+    closeKeyboard();
+    scrollChatToBottom();
+
+    setTimeout(() => {
+      chatBody.appendChild(waitingBubble());
+      scrollChatToBottom();
+    }, 360);
+
+    setTimeout(() => {
+      const w = document.getElementById('waitingBubble');
+      if (w) w.remove();
+
+      // Case 3: bot warns that a different engineer will be assigned
+      const responseTexts = state.case === 'case3'
+        ? ['ठीक है।', '&nbsp;', 'नए दिन के लिए एक दूसरे इंजीनियर को भेजा जाएगा।', '&nbsp;', 'नीचे दिए गए बटन से नया दिन चुनें।']
+        : ['ठीक है।', '&nbsp;', 'नीचे दिए गए बटन से नेट लगवाने का दिन बदलें।'];
+      const ctaLabel = 'नेट लगवाने का दिन बदलें';
+
+      const ctaRow = botBubbleWithCTA(responseTexts, '10:42 AM', ctaLabel, () => {
+        state.activeCta = ctaRow.querySelector('.msg-cta');
+        showPicker();
+      });
+      chatBody.appendChild(ctaRow);
+      scrollChatToBottom();
+    }, 1800);
+  }
+
+  sendBtn.addEventListener('click', sendIntent);
+  inputField.addEventListener('click', () => {
+    if (state.intentSent || state.committed) return;
+    // Typing is only meaningful for Case 1 / Case 3 (reschedule with no inline CTA yet)
+    if (state.case === 'case1' || state.case === 'case3') openKeyboard();
+  });
+
+  // ============================================================================
+  // PICKER POPULATION (per-case context strip + date range)
+  // ============================================================================
+  // Date sets per case:
+  //   case1, case3 → 11 dates (5–15 मई), current = 5 मई
+  //   case2, edge   → 11 dates (5–15 मई), 12 & 13 मई marked current (proposed)
+  //   schedule      → 10 dates (11–20 मई), 12 & 13 मई marked current (proposed)
+  function populatePicker() {
+    // Context strip
+    if (state.case === 'case1' || state.case === 'case3') {
+      contextStrip.innerHTML = `
+        <div class="context-strip-label">अभी तय है</div>
+        <div class="context-strip-value">5 मई, मंगलवार</div>
+        <div class="context-strip-time">10 से 1 बजे के बीच</div>`;
+    } else if (state.case === 'case2') {
+      contextStrip.innerHTML = `
+        <div class="context-strip-label">व्योम ने सुझाए थे</div>
+        <div class="context-strip-value">12 मई · दोपहर 2-5 बजे</div>
+        <div class="context-strip-time">या 13 मई · सुबह 11-2 बजे</div>`;
+    } else if (state.case === 'edge') {
+      contextStrip.innerHTML = `
+        <div class="context-strip-label">सुझाए गए दोनों समय अब भर गए हैं</div>
+        <div class="context-strip-value">12 मई · दोपहर 2-5 बजे · ❌</div>
+        <div class="context-strip-time">13 मई · सुबह 11-2 बजे · ❌</div>`;
+    } else {
+      // schedule
+      contextStrip.innerHTML = `
+        <div class="context-strip-label">व्योम ने सुझाए हैं</div>
+        <div class="context-strip-value">12 मई · दोपहर 2-5 बजे</div>
+        <div class="context-strip-time">या 13 मई · सुबह 11-2 बजे</div>`;
+    }
+
+    // Date row
+    const dates = (state.case === 'schedule')
+      ? buildScheduleDates()
+      : buildRescheduleDates();
+    dateRow.innerHTML = dates;
+
+    // For Edge: mark 12 & 13 मई as disabled (both proposed slots are gone)
+    if (state.case === 'edge') {
+      dateRow.querySelectorAll('.date-card').forEach(c => {
+        if (c.dataset.date === '12 मई' || c.dataset.date === '13 मई') {
+          c.classList.add('disabled');
+          c.classList.remove('current');
+        }
+      });
+    }
+
+    // Reset selection state for fresh entry
+    state.selectedDate = null;
+    state.selectedSlot = null;
+    timeSection.classList.remove('visible');
+    pickerFooter.classList.remove('visible');
+    slotGrid.querySelectorAll('.slot-card').forEach(c => { c.classList.remove('selected'); c.classList.remove('disabled'); });
+
+    // Scroll: schedule → start; reschedule cases → 5 मई is the first 'main' card
+    if (state.case === 'schedule') {
+      dateRow.scrollLeft = 0;
+    } else {
+      // 5 मई = first card; bring 12 मई (proposed) into view for case2/edge
+      if (state.case === 'case2' || state.case === 'edge') {
+        const c = dateRow.querySelector('[data-date="12 मई"]');
+        if (c) requestAnimationFrame(() => { dateRow.scrollLeft = Math.max(0, c.offsetLeft - 16); });
+      } else {
+        dateRow.scrollLeft = 0;
+      }
+    }
+  }
+
+  function buildRescheduleDates() {
+    // 5–15 मई. For case2: 12 & 13 are 'current' (proposed). For case1/case3: 5 is 'current'.
+    const days = [
+      { d:5, day:'मंगलवार', short:'मंगल' },
+      { d:6, day:'बुधवार',  short:'बुध' },
+      { d:7, day:'गुरुवार', short:'गुरु' },
+      { d:8, day:'शुक्रवार', short:'शुक्र' },
+      { d:9, day:'शनिवार',  short:'शनि' },
+      { d:10, day:'रविवार', short:'रवि',   disabled:true },
+      { d:11, day:'सोमवार', short:'सोम' },
+      { d:12, day:'मंगलवार', short:'मंगल' },
+      { d:13, day:'बुधवार',  short:'बुध' },
+      { d:14, day:'गुरुवार', short:'गुरु' },
+      { d:15, day:'शुक्रवार', short:'शुक्र' },
+    ];
+    return days.map(x => {
+      const cls = ['date-card'];
+      if (x.disabled) cls.push('disabled');
+      if ((state.case === 'case1' || state.case === 'case3') && x.d === 5) cls.push('current');
+      if ((state.case === 'case2' || state.case === 'edge') && (x.d === 12 || x.d === 13)) cls.push('current');
+      return `<div class="${cls.join(' ')}" data-date="${x.d} मई" data-day="${x.day}">
+        <div class="date-day">${x.short}</div><div class="date-num">${x.d}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function buildScheduleDates() {
+    // 11–20 मई. 12 & 13 are 'current' (proposed). One disabled day = 16 मई (शनि).
+    const days = [
+      { d:11, day:'सोमवार',  short:'सोम' },
+      { d:12, day:'मंगलवार', short:'मंगल', current:true },
+      { d:13, day:'बुधवार',  short:'बुध',  current:true },
+      { d:14, day:'गुरुवार', short:'गुरु' },
+      { d:15, day:'शुक्रवार', short:'शुक्र' },
+      { d:16, day:'शनिवार',  short:'शनि', disabled:true },
+      { d:17, day:'रविवार',  short:'रवि' },
+      { d:18, day:'सोमवार',  short:'सोम' },
+      { d:19, day:'मंगलवार', short:'मंगल' },
+      { d:20, day:'बुधवार',  short:'बुध' },
+    ];
+    return days.map(x => {
+      const cls = ['date-card'];
+      if (x.disabled) cls.push('disabled');
+      if (x.current)  cls.push('current');
+      return `<div class="${cls.join(' ')}" data-date="${x.d} मई" data-day="${x.day}">
+        <div class="date-day">${x.short}</div><div class="date-num">${x.d}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // ============================================================================
+  // PICKER INTERACTION
+  // ============================================================================
+  // Per-date slot availability — booked slots are disabled with a toast.
   const slotAvailability = {
-    '16 मई': [],          // all slots booked (date is also disabled in markup)
-    '17 मई': ['शाम'],     // only शाम free
+    '11 मई': ['शाम'],         // demo: only शाम free on 11 मई
   };
 
   dateRow.addEventListener('click', (e) => {
@@ -914,16 +1202,16 @@
     dateRow.querySelectorAll('.date-card').forEach(c => c.classList.remove('selected'));
     card.classList.add('selected');
     state.selectedDate = card.dataset.date;
-    state.selectedDay = card.dataset.day;
+    state.selectedDay  = card.dataset.day;
     timeSection.classList.add('visible');
 
+    // Apply slot availability for the selected date
     const avail = slotAvailability[state.selectedDate];
     document.querySelectorAll('.slot-card').forEach(slot => {
       const slotName = slot.dataset.slotName;
       const isAvailable = !avail || avail.includes(slotName);
-      if (isAvailable) {
-        slot.classList.remove('disabled');
-      } else {
+      if (isAvailable) slot.classList.remove('disabled');
+      else {
         slot.classList.add('disabled');
         if (slot.classList.contains('selected')) {
           slot.classList.remove('selected');
@@ -948,79 +1236,78 @@
   });
 
   function maybeShowConfirm() {
-    if (state.selectedDate && state.selectedSlot) {
-      pickerFooter.classList.add('visible');
-    } else {
-      pickerFooter.classList.remove('visible');
-    }
+    if (state.selectedDate && state.selectedSlot) pickerFooter.classList.add('visible');
+    else pickerFooter.classList.remove('visible');
   }
 
-  pickerBack.addEventListener('click', () => {
-    pickerScreen.classList.remove('active');
-    chatScreen.classList.remove('left');
-    chatScreen.classList.add('active');
-  });
+  // Back button — no commit, CTAs in chat stay active so user can retry.
+  pickerBack.addEventListener('click', showChatFromPicker);
 
-  // Confirm from picker → return to chat with confirmation flow
+  // Confirm from picker → return to chat with confirmation flow.
   confirmBtn.addEventListener('click', () => {
     if (state.committed) return;
     state.committed = true;
-
-    pickerScreen.classList.remove('active');
-    chatScreen.classList.remove('left');
-    chatScreen.classList.add('active');
+    showChatFromPicker();
+    muteAllCtas();
+    state.intentSent = true;
 
     const slotInResponse = state.selectedSlot.replace('तक', 'के बीच');
+    const wasReschedule = (state.case === 'case1' || state.case === 'case2' || state.case === 'case3' || state.case === 'edge');
 
+    // 1. User quote-reply
     setTimeout(() => {
+      const quotedBotMsg = state.case === 'schedule' || state.case === 'case2'
+        ? 'बताइए कौन-सा ठीक रहेगा?'
+        : (state.case === 'edge'
+          ? 'नीचे दिए गए बटन से कोई और दिन चुनें।'
+          : 'नीचे दिए गए बटन से नेट लगवाने का दिन बदलें।');
       chatBody.appendChild(userReplyWithQuote(
-        'कोई अन्य दिन चुनें',
-        `✔️ ${state.selectedDate}, ${state.selectedSlot}`,
-        '10:18 AM'
+        quotedBotMsg,
+        `✔️ ${state.selectedDate}, ${state.selectedSlot.replace('तक','').trim()}`,
+        '10:43 AM'
       ));
       scrollChatToBottom();
-    }, 360);
+    }, 400);
 
+    // 2. Wiom typing
     setTimeout(() => {
       chatBody.appendChild(waitingBubble());
       scrollChatToBottom();
-    }, 1100);
+    }, 1200);
 
+    // 3. Confirmation bubble
     setTimeout(() => {
-      const waiting = document.getElementById('waitingBubble');
-      if (waiting) waiting.remove();
-
+      const w = document.getElementById('waitingBubble');
+      if (w) w.remove();
+      const headline = wasReschedule ? 'नया दिन पक्का हो गया।' : 'तारीख पक्की हो गई।';
       chatBody.appendChild(botBubble([
-        'तारीख पक्की हो गई।',
+        headline,
         '&nbsp;',
         `नेट <strong>${state.selectedDate}</strong>, <strong>${slotInResponse}</strong> लगेगा।`
-      ], '10:18 AM'));
-
-      chatBody.appendChild(botBubble(['अब आप आराम करें'], '10:18 AM', true));
+      ], '10:43 AM'));
+      chatBody.appendChild(botBubble(['अब आप आराम करें'], '10:43 AM', true));
       scrollChatToBottom();
-    }, 2600);
+    }, 2900);
 
-    setTimeout(() => {
-      const endCard = document.createElement('div');
-      endCard.className = 'prev-chat-card restart';
-      endCard.innerHTML = `
-        <div class="prev-chat-card-note">This is not part of design · Tap to restart</div>
-        <div class="prev-chat-card-text">Partner will receive the chosen slot and assign the engineer → Rest of the flow will be same as of today</div>
-      `;
-      endCard.addEventListener('click', () => location.reload());
-      chatBody.appendChild(endCard);
-      scrollChatToBottom();
-    }, 4600);
+    appendEndOfFlowCard(5000);
   });
 
-  // ===== Wire context → chat =====
-  contextNextBtn.addEventListener('click', startChat);
+  // ============================================================================
+  // ROUTING — context → scenarios → chat
+  // ============================================================================
+  contextNextBtn.addEventListener('click', showScenario);
+  document.getElementById('scenarioScheduleCard').addEventListener('click', () => { state.case = 'schedule'; startChat(); });
+  document.getElementById('scenarioCase1Card').addEventListener('click',    () => { state.case = 'case1';    startChat(); });
+  document.getElementById('scenarioCase2Card').addEventListener('click',    () => { state.case = 'case2';    startChat(); });
+  document.getElementById('scenarioCase3Card').addEventListener('click',    () => { state.case = 'case3';    startChat(); });
+  document.getElementById('scenarioEdgeCard').addEventListener('click',     () => { state.case = 'edge';     startChat(); });
 
-  // ===== Reset =====
   resetBtn.addEventListener('click', () => location.reload());
 
-  // ===== Figma-style tap hint =====
-  const hotspotSelector = '.input-field, .send-btn, .icon-btn, .msg-cta:not(.muted), .date-card, .slot-card, .btn-primary, .reset-fab, .prev-chat-card.restart, .btn-yellow-cta';
+  // ============================================================================
+  // FIGMA-STYLE HOTSPOT HINTS — pulse current tappable areas on empty taps
+  // ============================================================================
+  const hotspotSelector = '.input-field, .send-btn, .icon-btn, .msg-cta:not(.muted), .date-card, .slot-card, .btn-primary, .reset-fab, .prev-chat-card.restart, .btn-yellow-cta, .scenario-card';
   device.addEventListener('click', (e) => {
     if (e.target.closest(hotspotSelector)) return;
     showHotspotHints();
@@ -1029,22 +1316,27 @@
     let targets = [];
     if (contextScreen.classList.contains('active')) {
       targets = [contextNextBtn];
+    } else if (scenarioScreen.classList.contains('active')) {
+      targets = Array.from(scenarioScreen.querySelectorAll('.scenario-card'));
     } else if (chatScreen.classList.contains('active')) {
       const restartCard = chatBody.querySelector('.prev-chat-card.restart');
       if (restartCard) {
         targets = [restartCard];
+      } else if (!state.intentSent && !state.committed) {
+        // Case 1 / Case 3: chatbox is the way forward
+        // Schedule / Case 2 / Edge: active CTAs in the latest bubble
+        const activeCtas = chatBody.querySelectorAll('.msg-cta:not(.muted)');
+        if (activeCtas.length) targets = Array.from(activeCtas);
+        if (state.case === 'case1' || state.case === 'case3') targets.push(inputField);
       } else {
         const activeCtas = chatBody.querySelectorAll('.msg-cta:not(.muted)');
-        targets = Array.from(activeCtas);
+        const latest = activeCtas[activeCtas.length - 1];
+        if (latest) targets = [latest];
       }
     } else if (pickerScreen.classList.contains('active')) {
-      if (!state.selectedDate) {
-        targets = Array.from(dateRow.querySelectorAll('.date-card:not(.disabled)'));
-      } else if (!state.selectedSlot) {
-        targets = Array.from(slotGrid.querySelectorAll('.slot-card:not(.disabled)'));
-      } else {
-        targets = [confirmBtn];
-      }
+      if (!state.selectedDate) targets = Array.from(dateRow.querySelectorAll('.date-card:not(.disabled)'));
+      else if (!state.selectedSlot) targets = Array.from(slotGrid.querySelectorAll('.slot-card:not(.disabled)'));
+      else targets = [confirmBtn];
     }
     targets.forEach(el => {
       el.classList.add('hint-pulse');
