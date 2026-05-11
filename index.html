@@ -922,37 +922,14 @@
     appendEndOfFlowCard(4400);
   }
 
-  // User tapped "कोई अन्य दिन चुनें" →
-  //   user bubble "✔️ हो गया" → Wiom typing → Wiom message with CTA → tap CTA opens picker
+  // User tapped "कोई अन्य दिन चुनें" → open the picker immediately.
+  // The "✔️ हो गया" reply (plus Wiom confirmation) only appears after the user
+  // actually picks a date+slot and confirms. If the user backs out of the picker
+  // without confirming, the original slot CTAs stay tappable.
   function onChooseAnotherDay(changeBtn) {
     if (state.committed) return;
-    muteAllCtas();
-
-    setTimeout(() => {
-      chatBody.appendChild(userBubble('✔️ हो गया', '10:16 AM'));
-      scrollChatToBottom();
-    }, 200);
-
-    setTimeout(() => {
-      chatBody.appendChild(waitingBubble());
-      scrollChatToBottom();
-    }, 900);
-
-    setTimeout(() => {
-      const w = document.getElementById('waitingBubble');
-      if (w) w.remove();
-      const ctaRow = botBubbleWithCTA(
-        ['ठीक है।', '&nbsp;', 'नीचे दिए गए बटन से दिन और समय चुनें।'],
-        '10:16 AM',
-        'दिन और समय चुनें',
-        () => {
-          state.activeCta = ctaRow.querySelector('.msg-cta');
-          showPicker();
-        }
-      );
-      chatBody.appendChild(ctaRow);
-      scrollChatToBottom();
-    }, 2200);
+    state.activeCta = changeBtn;
+    showPicker();
   }
 
   function appendEndOfFlowCard(delay) {
